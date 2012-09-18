@@ -18,7 +18,7 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- * 		Christopher R. Field <christopher.field.ctr@nrl.navy.mil>
+ * 		Christopher R. Field <christopher.field@nrl.navy.mil, cfield2@gmail.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
