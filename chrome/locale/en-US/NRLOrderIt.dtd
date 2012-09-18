@@ -21,13 +21,12 @@
 <!ENTITY nrlorderit.originator.label "Originator">
 <!ENTITY nrlorderit.deliverto.label "Deliver To">
 <!ENTITY nrlorderit.priority.label "Priority">
-<!ENTITY nrlorderit.selectjobordernumber.label "Select a Job Order Number">
-<!ENTITY nrlorderit.selectcompany.label "Select a Company">
 <!ENTITY nrlorderit.selectcode.label "Select a Code">
 <!ENTITY nrlorderit.total.label "Total">
 <!ENTITY nrlorderit.added.label "Added">
 <!ENTITY nrlorderit.required.label "Required">
 <!ENTITY nrlorderit.submitted.label "Submitted">
+<!ENTITY nrlorderit.ordered.label "Ordered">
 <!ENTITY nrlorderit.received.label "Received">
 <!ENTITY nrlorderit.notes.label "Notes">
 <!ENTITY nrlorderit.date.label "Date">
@@ -95,6 +94,8 @@
 <!ENTITY nrlorderit.purchaseorder.company.tooltip "The company to purchase the items from">
 <!ENTITY nrlorderit.purchaseorder.submitted.tooltip "Check if the purchase order has been submitted to the business office, today's date will be used unless otherwise specified">
 <!ENTITY nrlorderit.purchaseorder.submitteddate.tooltip "The date the purchase order was submitted to the business office">
+<!ENTITY nrlorderit.purchaseorder.ordered.tooltip "Check if the purchase order has been ordered by the business office, today's date will be used unless otherwise specified">
+<!ENTITY nrlorderit.purchaseorder.ordereddate.tooltip "The date the purchase order was ordered by the business office">
 <!ENTITY nrlorderit.purchaseorder.received.tooltip "Check if the purchase order has been printed, submitted, and received in full, today's date will be used unless otherwise specified">
 <!ENTITY nrlorderit.purchaseorder.receiveddate.tooltip "The date the purchase order was received by the originator">
 <!ENTITY nrlorderit.purchaseorder.notes.tooltip "Additional information about the purchase order, this is not included in the printing of the purchase order">

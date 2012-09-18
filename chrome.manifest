@@ -1,4 +1,6 @@
-content NRLOrderIt chrome/content/
-overlay chrome://browser/content/browser.xul chrome://NRLOrderIt/content/NRLOrderIt.xul
-locale	NRLOrderIt en-US chrome/locale/en-US/
-skin NRLOrderIt classic/1.0 chrome/skin/
+content 	NRLOrderIt 					chrome/content/
+locale		NRLOrderIt 	en-US 			chrome/locale/en-US/
+skin 		NRLOrderIt 	classic/1.0 	chrome/skin/
+resource  	NRLOrderIt					modules/
+
+overlay chrome://browser/content/browser.xul chrome://NRLOrderIt/content/BrowserOverlay.xul

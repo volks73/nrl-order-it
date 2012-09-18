@@ -1,5 +1,11 @@
 The TODO list for the NRL Order It Extension:
 
+- Add "submitting" locks purchase order and puts it into read/view-only
+- Add copy current URL to company website form field
+- Add advance focus upon enter key
+- Add automatic formatting of company website
+- Add automatic phone number formatting
+- Add phone number format preference
 - Add ordered check box similar to received and submitted
 - Add company search to purchase order form
 - Add job order number search to purchase order form
