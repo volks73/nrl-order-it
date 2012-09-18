@@ -45,6 +45,7 @@ var NRLOrderIt = new function()
 	const EXT_TITLE = "NRL Order It";
 	const EXT_DIR = "extensions";
 	const DEFAULTS_DIR = "defaults";
+	const DB_FILE_OLD = "NRLOrderIt_old.sqlite";
 	const DB_FILE = "NRLOrderIt.sqlite";
 	const DB_DEFAULT_FILE = "NRLOrderIt_default.sqlite";
 	const DB_PATH = "profile:" + DB_FILE;
@@ -78,7 +79,11 @@ var NRLOrderIt = new function()
 		                                .getService(Components.interfaces.nsIPrefService)
 		                                .getBranch("nrlorderit.");
 		this.prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
-				
+		
+		var gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
+		var currentVersion = gExtensionManager.getItemForID(EXT_ID).version;
+		
+		version = this.prefs.getCharPref('version');
 		firstRun = this.prefs.getBoolPref('firstrun');
 		
 		/*
@@ -87,33 +92,26 @@ var NRLOrderIt = new function()
 		if ( firstRun )
 		{
 			this.prefs.setBoolPref('firstrun', false);
-			createDatabase(this.prefs.getCharPref('version'));
-			
-			try 
-			{
-				// Firefox 4 and later;
-				Components.utils.import("resource://gre/modules/AddonManager.jsm");
-				AddonManager.getAddonByID(EXT_ID, function(addon)
-				{
-					var tempPrefs = Components.classes["@mozilla.org/preferences-service;1"]
-					.getService(Components.interfaces.nsIPrefService)
-                    .getBranch("nrlorderit.");
-					
-					tempPrefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
-					tempPrefs.setCharPref('version', addon.version);
-				}); 					
-			}
-			catch ( ex ) 
-			{
-				// Firefox 3.6 and before
-				var gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
-				this.prefs.setCharPref('version', gExtensionManager.getItemForID(EXT_ID).version);
-			}
+			this.prefs.setCharPref('version', currentVersion);
+
+			createDatabase();
 				
 			showTutorial();
 		}
 		
-		// TODO: Upgrade code
+		/*
+		 * Upgrade.
+		 */
+		if ( version != currentVersion && !firstRun )
+		{
+			this.prefs.setCharPref('version', currentVersion);
+
+			createDatabase();
+						
+			// TODO copy data from old database to new database.
+			
+			showTutorial();
+		}
 		
 		window.removeEventListener("load", function() { NRLOrderIt.onLoad(); }, true);
 		
@@ -154,9 +152,9 @@ var NRLOrderIt = new function()
 	/**
 	 * Creates the database file.
 	 * 
-	 * @param version The already installed version.
+	 * @param The default database file.
 	 */
-	function createDatabase(version)
+	function createDatabase()
 	{
 		/*
 		 * Get the profile folder. The database file is located in ProfD/NRLOrderIt while
@@ -173,35 +171,15 @@ var NRLOrderIt = new function()
 		 */
 		if ( dbFile.exists() )
 		{
-			try
-			{
-				if ( version )
-				{
-					dbFile.copyTo(profileDir, EXT_NAME + "_" + version + ".sqlite");
-				}
-				else
-				{
-					dbFile.copyTo(profileDir, EXT_NAME + "_old.sqlite");
-				}
-			}
-			catch ( e )
-			{
-				/*
-				 * Do nothing.
-				 */
-			}
+			dbFile.copyTo(profileDir, DB_FILE_OLD);
 		}
 		else
 		{
-			// %APPDATA%\Roaming\Mozilla\Firefox\Profiles\
 			var defaultsDir = profileDir.clone();
-			// %APPDATA%\Roaming\Mozilla\Firefox\Profiles\extensions\
 			defaultsDir.append(EXT_DIR)
-			// %APPDATA%\Roaming\Mozilla\Firefox\Profiles\extensions\NRLOrderIt@nrl.navy.mil
 			defaultsDir.append(EXT_ID);
-			// %APPDATA%\Roaming\Mozilla\Firefox\Profiles\extensions\NRLOrderIt@nrl.navy.mil\defaults
 			defaultsDir.append(DEFAULTS_DIR);
-							
+					
 			var defaultDB = null;
 					
 			if ( defaultsDir.exists() )

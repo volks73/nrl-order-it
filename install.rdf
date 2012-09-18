@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 	<RDF:Description about="urn:mozilla:install-manifest">
 		<em:id>NRLOrderIt@nrl.navy.mil</em:id>
-		<em:version>0.3.8</em:version>
+		<em:version>0.3.0</em:version>
 		<em:type>2</em:type>
 
 		<em:targetApplication>
 			<RDF:Description>
 				<em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
 				<em:minVersion>3.0</em:minVersion>
-				<em:maxVersion>10.0.*</em:maxVersion>
+				<em:maxVersion>3.6.*</em:maxVersion>
 			</RDF:Description>
 		</em:targetApplication>
 		
@@ -25,6 +25,5 @@
 		<em:developer>Christopher R. Field</em:developer>
 		<em:contributor>Nathan J. Begue</em:contributor>
 		<em:targetPlatform/>
-		<em:unpack>true</em:unpack>
 	</RDF:Description>
 </RDF>

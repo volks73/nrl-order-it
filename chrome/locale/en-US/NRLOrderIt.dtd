@@ -13,8 +13,6 @@
 <!ENTITY nrlorderit.print.label "Print">
 <!ENTITY nrlorderit.copy.label "Copy">
 <!ENTITY nrlorderit.delete.label "Delete">
-<!ENTITY nrlorderit.submit.label "Submitted">
-<!ENTITY nrlorderit.receive.label "Received">
 <!ENTITY nrlorderit.title.label "Title">
 <!ENTITY nrlorderit.company.label "Company">
 <!ENTITY nrlorderit.jobordernumber.label "Job Order Number">
