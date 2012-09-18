@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Blank Purchase Order</title>
-<link rel="stylesheet" href="PurchaseOrderForm.css"/>
+<link rel="stylesheet" href="NRLOrderIt.css"/>
 </head>
 <body>
 	<div id="htmlPurchaseOrderTitle">
@@ -67,7 +67,7 @@
 					<span id="htmlAddress"></span>
 				</td>
 				<td class="end" style="vertical-align: top;">
-					Equipment Bar Code Required<input id="htmlEquipmentBarCode" type="checkbox"/>
+					Equipment Bar Code Required<input id="htmlEquipmentBarCode" type="checkbox" checked="false"/>
 					<br/>
 					(Value over $2,500.00)			
 				</td>
@@ -91,18 +91,17 @@
 				<td class="faxField" style="border-right-style: solid;"></td>
 			</tr>
 		</table>
-		<table class="shaded">
-			<tr id="htmlItemsHeader" class="items">
-				<td class="lineItem">Line Item #</td>
-				<td class="part">Part/Model #</td>
-				<td class="description">Description of material and/or Services</td>
-				<td class="unitOfIssue">Unit of Issue</td>
-				<td class="qty">Qty</td>
-				<td class="unitPrice">Unit Price $</td>
-				<td class="totalCost">Total Cost $</td>
+		<table id="htmlItems">
+			<tr class="items">
+				<td class="shaded" style="width: 0.59in;">Line Item #</td>
+				<td class="shaded" style="width: 0.94in;">Part/Model #</td>
+				<td class="shaded" style="width: 3.58in;">Description of material and/or Services</td>
+				<td class="shaded" style="width: 0.57in;">Unit of Issue</td>
+				<td class="shaded" style="width: 0.42in;">Qty</td>
+				<td class="shaded" style="width: 0.75in;">Unit Price $</td>
+				<td class="shaded" style="width: 0.74in; border-right-style: solid;">Total Cost $</td>
 			</tr>
 		</table>
-		<table id="htmlItems"></table>
 		<table>
 			<tr>
 				<td style="width: 2.67in;">Signature</td>

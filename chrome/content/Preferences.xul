@@ -37,29 +37,46 @@
 
 <?xml-stylesheet href="chrome://global/skin/global.css"?>
 <!DOCTYPE prefwindow SYSTEM "chrome://NRLOrderIt/locale/NRLOrderIt.dtd">
-<prefwindow id="NRLOrderIt-Preferences" title="NRL Order It Preferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<prefwindow id="NRLOrderIt-Preferences" title="NRL Order It Form Defaults" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	<prefpane id="NRLOrderIt-Pref-General" label="&nrlorderit.general.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Prefs_General-32x32.png">
 		<preferences>
 			<preference id="NRLOrderIt-Pref-DoubleClickToWebsite" name="nrlorderit.general.doubleclicktowebsite" type="bool"/>
-			<preference id="NRLOrderIt-Pref-ShowPrintDialog" name="nrlorderit.general.showprintdialog" type="bool"/>
+			<preference id="NRLOrderIt-Pref-Print" name="nrlorderit.general.print" type="bool"/>
+			<preference id="NRLOrderIt-Pref-CloseOnPrint" name="nrlorderit.general.closeonprint" type="bool"/>
 			<preference id="NRLOrderIt-Pref-SignatureDate" name="nrlorderit.general.signaturedate" type="bool"/>
 		</preferences>
 		
 		<hbox tooltiptext="&nrlorderit.preference.doubleclicktowebsite.tooltip;">
-			<vbox pack="center">
+			<vbox>
+				<spacer flex="1"/>
 				<label value="&nrlorderit.doubleclicktowebsite.label;:" width="200"/>
-			</vbox>			
+				<spacer flex="1"/>
+			</vbox>
+			
 			<checkbox preference="NRLOrderIt-Pref-DoubleClickToWebsite" label="&nrlorderit.yes.label;"/>
 		</hbox>
-		<hbox tooltiptext="&nrlorderit.preference.showprintdialog.tooltip;">
-			<vbox pack="center">
-				<label value="&nrlorderit.showprintdialog.label;:" width="200"/>
+		<hbox tooltiptext="&nrlorderit.preference.printaftergenerate.tooltip;">
+			<vbox>
+				<spacer flex="1"/>
+				<label value="&nrlorderit.printaftergenerate.label;:" width="200"/>
+				<spacer flex="1"/>
+			</vbox>
+			
+			<checkbox preference="NRLOrderIt-Pref-Print" label="&nrlorderit.yes.label;"/>
+		</hbox>
+		<hbox tooltiptext="&nrlorderit.preference.closeafterprint.tooltip;">
+			<vbox>
+				<spacer flex="1"/>
+				<label value="&nrlorderit.closeafterprint.label;:" width="200"/>
+				<spacer flex="1"/>
 			</vbox>			
-			<checkbox preference="NRLOrderIt-Pref-ShowPrintDialog" label="&nrlorderit.yes.label;"/>
+			<checkbox preference="NRLOrderIt-Pref-CloseOnPrint" label="&nrlorderit.yes.label;"/>
 		</hbox>
 		<hbox tooltiptext="&nrlorderit.preference.signaturedate.tooltip;">
-			<vbox pack="center">
+			<vbox>
+				<spacer flex="1"/>
 				<label value="&nrlorderit.signaturedate.label;:" width="200"/>
+				<spacer flex="1"/>
 			</vbox>
 			<checkbox preference="NRLOrderIt-Pref-SignatureDate" label="&nrlorderit.yes.label;"/>
 		</hbox>
@@ -69,44 +86,47 @@
 			<preference id="NRLOrderIt-Pref-Originator" name="nrlorderit.default.originator" type="string"/> 
 			<preference id="NRLOrderIt-Pref-DeliverTo" name="nrlorderit.default.deliverto" type="string"/>
 			<preference id="NRLOrderIt-Pref-Priority" name="nrlorderit.default.priority" type="string"/>
-			<preference id="NRLOrderIt-Pref-DateRequired" name="nrlorderit.default.daterequired" type="int"/>
 			<preference id="NRLOrderIt-Pref-UnitOfIssue" name="nrlorderit.default.unitofissue" type="string"/>
 			<preference id="NRLOrderIt-Pref-SignatureTitle" name="nrlorderit.default.signaturetitle" type="string"/>
 		</preferences>
 		
 		<hbox tooltiptext="&nrlorderit.preference.originator.tooltip;">
-			<vbox pack="center">
+			<vbox>
+				<spacer flex="1"/>
 				<label value="&nrlorderit.originator.label;:" width="100"/>
+				<spacer flex="1"/>
 			</vbox>
 			<textbox preference="NRLOrderIt-Pref-Originator"/>
 		</hbox>
 		<hbox tooltiptext="&nrlorderit.preference.deliverto.tooltip;">
-			<vbox pack="center">
+			<vbox>
+				<spacer flex="1"/>
 				<label value="&nrlorderit.deliverto.label;:" width="100"/>
+				<spacer flex="1"/>
 			</vbox>
 			<textbox preference="NRLOrderIt-Pref-DeliverTo"/>
 		</hbox>
 		<hbox tooltiptext="&nrlorderit.preference.priority.tooltip;">
-			<vbox pack="center">
+			<vbox>
+				<spacer flex="1"/>
 				<label value="&nrlorderit.priority.label;:" width="100"/>
+				<spacer flex="1"/>
 			</vbox>
 			<textbox preference="NRLOrderIt-Pref-Priority"/>
 		</hbox>
-		<hbox tooltiptext="&nrlorderit.preference.daterequired.tooltip;">
-			<vbox pack="center">
-				<label value="&nrlorderit.date.label; &nrlorderit.required.label;:" width="100"/>
-			</vbox>
-			<textbox preference="NRLOrderIt-Pref-DateRequired" type="number" decimalplaces="0" hidespinbuttons="false" width="145"/>
-		</hbox>
 		<hbox tooltiptext="&nrlorderit.preference.unitofissue.tooltip;">
-			<vbox pack="center">
+			<vbox>
+				<spacer flex="1"/>
 				<label value="&nrlorderit.unitofissue.label;:" width="100"/>
+				<spacer flex="1"/>
 			</vbox>
 			<textbox preference="NRLOrderIt-Pref-UnitOfIssue"/>
 		</hbox>
 		<hbox tooltiptext="&nrlorderit.preference.signaturetitle.tooltip;">
-			<vbox pack="center">
+			<vbox>
+				<spacer flex="1"/>
 				<label value="&nrlorderit.signaturetitle.label;:" width="100"/>
+				<spacer flex="1"/>
 			</vbox>
 			<textbox preference="NRLOrderIt-Pref-SignatureTitle"/>
 		</hbox>

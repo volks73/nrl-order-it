@@ -1,12 +1,13 @@
 The TODO list for the NRL Order It Extension:
 
-- Add ordered check box similar to received and submitted
-- Add company search to purchase order form
-- Add job order number search to purchase order form
-- Add show extension install and database location
+- Use current website for company button
+- Add backup button
 - Add attachments: links to websites, files, PDFs, drawings, etc.
 - Add tags
+- Add full screen mode
+- Add date search
 - Add advance search
 - Add PDF conversion
 - Add send-to option to send a copy of a PO via email to someone else
+- Add export to CSV
 - Add appending signature to purchase order

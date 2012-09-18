@@ -1,11 +1,9 @@
-pref("nrlorderit.version", "0.0.0");
-pref("nrlorderit.firstrun", true);
-pref("nrlorderit.general.showprintdialog", true);
+pref("nrlorderit.general.print", true);
+pref("nrlorderit.general.closeonprint", false);
 pref("nrlorderit.general.signaturedate", true);
 pref("nrlorderit.general.doubleclicktowebsite", false);
 pref("nrlorderit.default.originator", "");
 pref("nrlorderit.default.deliverto", "");
 pref("nrlorderit.default.priority", "Standard");
 pref("nrlorderit.default.unitofissue", "Ea.");
-pref("nrlorderit.default.daterequired", 7);
 pref("nrlorderit.default.signaturetitle", "");
