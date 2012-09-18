@@ -91,11 +91,7 @@
 								<menuitem label="&nrlorderit.view.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_View-16x16.png" oncommand="PurchaseOrder.view();"/>
 								<menuitem label="&nrlorderit.print.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Print-16x16.png" oncommand="PurchaseOrder.print();"/>
 								<menuitem label="&nrlorderit.copy.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Copy-16x16.png" oncommand="PurchaseOrder.copy();"/>
-								<menuseparator/>
 								<menuitem label="&nrlorderit.delete.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Delete-16x16.png" oncommand="PurchaseOrder.remove();"/>
-								<menuseparator/>
-								<menuitem label="&nrlorderit.submit.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Submit-16x16.png" oncommand="PurchaseOrder.submit();"/>
-								<menuitem label="&nrlorderit.receive.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Receive-16x16.png" oncommand="PurchaseOrder.receive();"/>
 							</menupopup>
 							<tree id="NRLOrderIt-PurchaseOrder-Tree" 
 								  seltype="single" 
@@ -408,7 +404,6 @@
 									<separator class="groove"/>
 									<menupopup id="NRLOrderIt-Item-ContextMenu">
 										<menuitem label="&nrlorderit.edit.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Edit-16x16.png" oncommand="PurchaseOrder.editItem();"/>
-										<menuseparator/>
 										<menuitem label="&nrlorderit.delete.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Delete-16x16.png" oncommand="PurchaseOrder.removeItem();"/>
 									</menupopup>													
 									<tree id="NRLOrderIt-Item-Tree"  
@@ -450,9 +445,9 @@
 													hazmat_codes.description as hazmatCodesDescription, 
 													items.hazmat_codes_id as hazmatCodesId, 
 													unit_of_issue, 
-													CAST(unit_price AS INT) || '.' || substr(unit_price * 10, -2, -1) || substr(unit_price * 100, -2, -1) AS unitPrice, 
+													CAST(unit_price AS INT) || '.' || substr(ROUND(unit_price * 100), -2, -2) AS unitPrice, 
 													quantity,
-													CAST(unit_price * quantity AS INT) || '.' || substr(unit_price * quantity * 10, -2, -1) || substr(unit_price * quantity * 100, -2, -1) AS totalCost,														
+													CAST(unit_price * quantity AS INT) || '.' || substr(ROUND(unit_price * quantity * 100), -2, -2) AS totalCost,														
 													strftime('%m/%d/%Y', datetime(date_added, 'unixepoch')) as dateAdded, 
 													date_added as dateAddedTime 
 												FROM 
@@ -568,7 +563,6 @@
 								<menupopup id="NRLOrderIt-Company-ContextMenu">
 									<menuitem label="&nrlorderit.edit.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Edit-16x16.png" oncommand="Company.showUpdateForm();"/>
 									<menuitem label="&nrlorderit.goto.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Goto-16x16.png" oncommand="Company.gotoWebsite();"/>
-									<menuseparator/>
 									<menuitem label="&nrlorderit.delete.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Delete-16x16.png" oncommand="Company.remove();"/>									
 								</menupopup>																			
 								<tree id="NRLOrderIt-Company-Tree" 
@@ -683,7 +677,6 @@
 								</vbox>
 								<menupopup id="NRLOrderIt-JobOrderNumber-ContextMenu">
 									<menuitem label="&nrlorderit.edit.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Edit-16x16.png" oncommand="JobOrderNumber.showUpdateForm();"/>
-									<menuseparator/>
 									<menuitem label="&nrlorderit.delete.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Delete-16x16.png" oncommand="JobOrderNumber.remove();"/>
 								</menupopup>			
 								<tree id="NRLOrderIt-JobOrderNumber-Tree" 

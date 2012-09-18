@@ -85,8 +85,6 @@ var PurchaseOrder = new function()
 	this.print = print;
 	this.copy = copy;
 	this.search = search;
-	this.submit = submit;
-	this.receive = receive;
 	
 	/**
 	 * Clears the purchase order and item fields.
@@ -106,13 +104,7 @@ var PurchaseOrder = new function()
 		
 		amount = '';
 		dateAdded = new Date();
-		
-		/*
-		 * Date submitted and date received are Date objects, but they have no actual date.
-		 */
-		dateSubmitted = new Date('NaN');
-		dateReceived = new Date('NaN');
-		
+		dateSubmitted = new Date();
 		notes = '';	
 		
 		item.id = '';
@@ -479,9 +471,7 @@ var PurchaseOrder = new function()
 		var formDeliverTo = document.getElementById('NRLOrderIt-PurchaseOrder-Form-DeliverTo');
 		var formPriority = document.getElementById('NRLOrderIt-PurchaseOrder-Form-Priority');
 		var formDateRequired = document.getElementById('NRLOrderIt-PurchaseOrder-Form-DateRequired');
-		var formSubmitted = document.getElementById('NRLOrderIt-PurchaseOrder-Form-Submitted');
 		var formDateSubmitted = document.getElementById('NRLOrderIt-PurchaseOrder-Form-DateSubmitted');
-		var formReceived = document.getElementById('NRLOrderIt-PurchaseOrder-Form-Received');
 		var formDateReceived = document.getElementById('NRLOrderIt-PurchaseOrder-Form-DateReceived');
 		var formNotes = document.getElementById('NRLOrderIt-PurchaseOrder-Form-Notes');
 		
@@ -540,25 +530,19 @@ var PurchaseOrder = new function()
 		formNotes.value = notes;
 		
 		if ( isNaN(dateSubmitted.getTime()) )
-		{			
+		{
+			var formSubmitted = document.getElementById('NRLOrderIt-PurchaseOrder-Form-Submitted');
 			formSubmitted.checked = false;
 			dateSubmitted = new Date();			 
-		}
-		else
-		{
-			formSubmitted.checked = true;
 		}
 		
 		formDateSubmitted.dateValue = dateSubmitted;
 		
 		if ( isNaN(dateReceived.getTime()) )
-		{			
+		{
+			var formReceived = document.getElementById('NRLOrderIt-PurchaseOrder-Form-Received');
 			formReceived.checked = false;
 			dateReceived = new Date();			 
-		}
-		else
-		{
-			formReceived.checked = true;
 		}
 		
 		formDateReceived.dateValue = dateReceived;
@@ -584,15 +568,7 @@ var PurchaseOrder = new function()
 		
 		getFormItem();
 		
-		if( item.hazmatCode <= 0 )
-		{
-			NRLOrderIt.displayMessage('item.hazmatCode');
-		}
-		else if ( item.unitPrice <= 0.0 )
-		{
-			NRLOrderIt.displayMessage('item.unitPrice');
-		}
-		else
+		if ( item.hazmatCode > 0 )
 		{
 			insertItem();		
 			resetItemForm();		
@@ -600,6 +576,10 @@ var PurchaseOrder = new function()
 			updateItemSummary();
 			
 			NRLOrderIt.updateMessage("item.add");
+		}
+		else
+		{
+			NRLOrderIt.displayMessage('item.hazmatCode');
 		}		
 	}
 	
@@ -891,64 +871,6 @@ var PurchaseOrder = new function()
 	}
 	
 	/**
-	 * Sets the date submitted to the current date.
-	 */
-	function submit()
-	{
-		id = getSelectedId();
-		
-		if ( id )
-		{
-			dateSubmitted = new Date();
-			
-			var statement = NRLOrderIt.conn.createStatement("UPDATE purchase_orders SET " +
-					"date_submitted = :dateSubmitted " +
-					"WHERE purchase_orders_id = :purchaseOrdersId");
-			
-			statement.params.purchaseOrdersId = id;
-			
-			var dateSubmittedTime = Math.round(dateSubmitted.getTime() / 1000);		
-			statement.params.dateSubmitted = dateSubmittedTime;
-						
-			statement.execute();
-			statement.reset();
-			
-			rebuildTree();
-			
-			NRLOrderIt.updateMessage('purchaseorder.submit');
-		}
-	}
-	
-	/**
-	 * Sets the date received to the current date.
-	 */
-	function receive()
-	{
-		id = getSelectedId();
-		
-		if ( id )
-		{
-			dateReceived = new Date();
-			
-			var statement = NRLOrderIt.conn.createStatement("UPDATE purchase_orders SET " +
-					"date_received = :dateReceived " +
-					"WHERE purchase_orders_id = :purchaseOrdersId");
-			
-			statement.params.purchaseOrdersId = id;
-			
-			var dateReceivedTime = Math.round(dateReceived.getTime() / 1000);		
-			statement.params.dateReceived = dateReceivedTime;
-						
-			statement.execute();
-			statement.reset();
-			
-			rebuildTree();
-			
-			NRLOrderIt.updateMessage('purchaseorder.receive');
-		}
-	}
-	
-	/**
 	 * Prints the selected purchase order. The HTML form is loaded into a hidden iframe, not a tab, and sends the completed form directly to
 	 * the printer.
 	 */
@@ -1195,7 +1117,6 @@ var PurchaseOrder = new function()
 		var index = 1;
 		var htmlItems = htmlDocument.getElementById('htmlItems');
 		htmlDocument.getElementById('htmlItemsHeader');
-		
 		/*
 		 * Clear all previous items. This fixes a bug were on successive prints, items keep
 		 * getting appended to the end of the purchase order. In other words, the items
@@ -1265,19 +1186,9 @@ var PurchaseOrder = new function()
 		/*
 		 * Add blank rows to the end of the form.
 		 */
-		var htmlItemsHeight = htmlItems.offsetHeight;
-		
-		/*
-		 * 450 is the maximum height in pixels for listing items on one page.
-		 */
-		var remainingSpace = 450 - htmlItemsHeight;
-		
-		/*
-		 * 31 is the row height for an empty or one row.
-		 */
-		var rowHeight = 31;
-		
-		while ( remainingSpace >= rowHeight )
+		var remainingRows = 14 - index;
+			
+		while ( remainingRows >= 0 )
 		{
 			var itemRow = htmlDocument.createElement('tr');
 			itemRow.appendChild(htmlDocument.createElement('td'));
@@ -1293,7 +1204,7 @@ var PurchaseOrder = new function()
 			
 			htmlItems.appendChild(itemRow);
 			
-			remainingSpace = remainingSpace - rowHeight;
+			remainingRows--;
 		}
 	}
 }
