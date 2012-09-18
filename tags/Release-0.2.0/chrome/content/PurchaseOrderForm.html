@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Blank Purchase Order</title>
+<link rel="stylesheet" href="NRLOrderIt.css"/>
+</head>
+<body>
+	<div id="htmlPurchaseOrderTitle">
+		Procurement/Credit Card Request Form
+	</div>
+	<div id="htmlPurchaseOrderForm">		
+		<table>
+			<tr>
+				<td class="shaded" style="width: 0.83in;">Request #</td>
+				<td class="shaded" style="width: 1.54in;"></td>
+				<td class="end" style="width: 2.78in;"></td>
+				<td class="open" style="width: 2.76in; border-top-style: solid;"></td>
+			</tr>
+			<tr>
+				<td class="shaded" style="border-bottom-style: solid; border-bottom-width: 3px;">Date:</td>
+				<td id="htmlDate" class="thickBottom"></td>
+				<td class="end" style="border-bottom-style: solid; border-bottom-width: 3px;">Credit Card<input type="checkbox"/> Procurement<input type="checkbox"/></td>
+				<td class="open"></td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td class="shaded" style="width: 2.44in;">1. Originator:</td>
+				<td class="end" style="width: 2.75in;"><span id="htmlOriginator"></span></td>
+				<td class="open" style="width: 2.71in;"></td>
+			</tr>
+			<tr>
+				<td class="shaded">2. Deliver to:</td>
+				<td class="end"><span id="htmlDeliverTo"></span></td>
+				<td class="open"></td>	
+			</tr>
+			<tr>
+				<td class="shaded">3. Priority:</td>
+				<td class="end"><span id="htmlPriority"></span></td>
+				<td class="open"></td>
+			</tr>
+			<tr>
+				<td class="shaded">4. Date Required:</td>
+				<td class="end"><span id="htmlDateRequired"></span></td>
+				<td class="open"></td>
+			</tr>
+			<tr>
+				<td class="shaded">5. Job Order Number:</td>
+				<td class="end"><span id="htmlJobOrderNumber"></span></td>
+				<td class="open"></td>
+			</tr>
+			<tr>
+				<td class="shaded" style="border-bottom-style: solid; border-bottom-width: 3px;" >6. Estimated Cost:</td>
+				<td class="end" style="border-bottom-style: solid; border-bottom-width: 3px;"><span id="htmlTotal"></span></td>
+				<td class="open" style="border-bottom-style: solid; border-bottom-width: 3px;"></td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td class="shaded" colspan="2" style="width: 5.08in;">7. Manufacturer and/or suggested Source(s):</td>
+				<td class="end" style="width: 2.60in;">Sole Source Justification Attached<input type="checkbox"/></td>
+			</tr>
+			<tr>
+				<td class="shaded"></td>
+				<td style="height: 80pt; vertical-align: top;">
+					<span id="htmlAddress"></span>
+				</td>
+				<td class="end" style="vertical-align: top;">
+					Equipment Bar Code Required<input id="htmlEquipmentBarCode" type="checkbox" checked="false"/>
+					<br/>
+					(Value over $2,500.00)			
+				</td>
+			</tr>
+			<tr>
+				<td class="phone">
+					Phone:
+				</td>
+				<td class="phoneField">
+					<span id="htmlPhone"></span>
+				</td>
+				<td class="phoneField" style="border-right-style: solid;"></td>
+			</tr>
+			<tr>
+				<td class="fax">
+					FAX:
+				</td>
+				<td class="faxField">
+					<span id="htmlFax"></span>
+				</td>
+				<td class="faxField" style="border-right-style: solid;"></td>
+			</tr>
+		</table>
+		<table id="htmlItems">
+			<tr class="items">
+				<td class="shaded" style="width: 0.59in;">Line Item #</td>
+				<td class="shaded" style="width: 0.94in;">Part/Model #</td>
+				<td class="shaded" style="width: 3.58in;">Description of material and/or Services</td>
+				<td class="shaded" style="width: 0.57in;">Unit of Issue</td>
+				<td class="shaded" style="width: 0.42in;">Qty</td>
+				<td class="shaded" style="width: 0.75in;">Unit Price $</td>
+				<td class="shaded" style="width: 0.74in; border-right-style: solid;">Total Cost $</td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td style="width: 2.67in;">Signature</td>
+				<td style="width: 2.4in;">Title</td>
+				<td class="end" style="width: 2.64in;">Date</td>
+			</tr>
+			<tr>
+				<td class="bottom" style="height: 0.32in;"></td>
+				<td class="bottom" style="text-align:center;"><span id="htmlSignatureTitle"></span></td>
+				<td class="end" style="border-bottom-style: solid; text-align:center;"><span id="htmlSignatureDate"></span></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

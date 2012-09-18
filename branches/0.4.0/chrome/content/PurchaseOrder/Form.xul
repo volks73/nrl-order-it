@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1/GPL 2.0/LGPL 2.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is NRL Order It.
+   -
+   - The Initial Developer of the Original Code is Christopher R. Field.
+   - Portions created by the Initial Developer are Copyright (C) 2010
+   - the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -   Christopher R. Field <christopher.field@nrl.navy.mil, cfield2@gmail.com>
+   -
+   - Alternatively, the contents of this file may be used under the terms of
+   - either the GNU General Public License Version 2 or later (the "GPL"), or
+   - the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+   - in which case the provisions of the GPL or the LGPL are applicable instead
+   - of those above. If you wish to allow use of your version of this file only
+   - under the terms of either the GPL or the LGPL, and not to allow others to
+   - use your version of this file under the terms of the MPL, indicate your
+   - decision by deleting the provisions above and replace them with the notice
+   - and other provisions required by the LGPL or the GPL. If you do not delete
+   - the provisions above, a recipient may use your version of this file under
+   - the terms of any one of the MPL, the GPL or the LGPL.
+   -
+   - ***** END LICENSE BLOCK ***** -->
+<?xml-stylesheet type="text/css" href="chrome://global/skin/" ?>
+<?xul-overlay href="chrome://NRLOrderIt/content/PurchaseOrder/Item/Panel.xul"?>
+<!DOCTYPE overlay SYSTEM "chrome://NRLOrderIt/locale/NRLOrderIt.dtd">
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+	<script type="application/x-javascript" src="chrome://NRLOrderIt/content/PurchaseOrder/Form.js" />
+
+	<hbox id="NRLOrderIt-PurchaseOrder-Form" hidden="true" flex="1">
+		<vbox>
+			<hbox>
+				<vbox pack="center">
+					<label value="&nrlorderit.title.label;:" 
+						width="150" />
+				</vbox>
+				<textbox id="NRLOrderIt-PurchaseOrder-Form-Title" 
+					width="250"
+					tooltiptext="&nrlorderit.purchaseorder.title.tooltip;" />
+			</hbox>
+			<hbox>
+				<vbox pack="center">
+					<label value="&nrlorderit.originator.label;:" width="150" />
+				</vbox>
+				<textbox id="NRLOrderIt-PurchaseOrder-Form-Originator"
+					width="250"
+					tooltiptext="&nrlorderit.purchaseorder.originator.tooltip;" />
+			</hbox>
+			<hbox>
+				<vbox pack="center">
+					<label value="&nrlorderit.deliverto.label;:" 
+						width="150" />
+				</vbox>
+				<textbox id="NRLOrderIt-PurchaseOrder-Form-DeliverTo" 
+					width="250"
+					tooltiptext="&nrlorderit.purchaseorder.deliverto.tooltip;" />
+			</hbox>
+			<hbox>
+				<vbox pack="center">
+					<label value="&nrlorderit.priority.label;:" 
+						width="150" />
+				</vbox>
+				<textbox id="NRLOrderIt-PurchaseOrder-Form-Priority" 
+					width="250"
+					tooltiptext="&nrlorderit.purchaseorder.priority.tooltip;" />
+			</hbox>
+			<hbox>
+				<vbox pack="center">
+					<label value="&nrlorderit.date.label; &nrlorderit.required.label;:" 
+						width="150" />
+				</vbox>
+			</hbox>
+			<hbox>
+				<vbox pack="center">
+					<label value="&nrlorderit.jobordernumber.label;:" 
+						width="150" />
+				</vbox>
+				<textbox id="NRLOrderIt-PurchaseOrder-Form-JobOrderNumber"
+					width="190"
+					tooltiptext="&nrlorderit.purchaseorder.jobordernumber.tooltip;"
+					type="text"
+					readonly="true" />
+				<toolbarbutton
+					label="&nrlorderit.new.label;"
+					image="chrome://NRLOrderIt/skin/NRLOrderIt_Add-16x16.png"
+					oncommand="NRLOrderIt.PurchaseOrderForm.addJobOrderNumber()" 
+					tooltiptext="&nrlorderit.company.currentpage.tooltip;" />
+			</hbox>
+			<hbox>
+				<vbox pack="center">
+					<label value="&nrlorderit.company.label;:" width="150" />
+				</vbox>
+				<textbox id="NRLOrderIt-PurchaseOrder-Form-Company" 
+					width="190"
+					tooltiptext="&nrlorderit.purchaseorder.company.tooltip;" 
+					type="text" 
+					readonly="true" />
+				<toolbarbutton
+					label="&nrlorderit.new.label;"
+					image="chrome://NRLOrderIt/skin/NRLOrderIt_Add-16x16.png"
+					oncommand="NRLOrderIt.PurchaseOrderForm.addCompany()" 
+					tooltiptext="&nrlorderit.company.currentpage.tooltip;" />
+			</hbox>
+			<hbox>
+				<vbox pack="center">
+					<label value="&nrlorderit.submitted.label;:" 
+						width="150" />
+				</vbox>
+				<checkbox id="NRLOrderIt-PurchaseOrder-Form-Submitted"
+					label="Yes" 
+					checked="false"
+					tooltiptext="&nrlorderit.purchaseorder.submitted.tooltip;" />
+				<vbox pack="center">
+					<label value="&nrlorderit.on.label;:" />
+				</vbox>
+			</hbox>
+			<hbox>
+				<vbox pack="center">
+					<label value="&nrlorderit.received.label;:" 
+					width="150" />
+				</vbox>
+				<checkbox id="NRLOrderIt-PurchaseOrder-Form-Received"
+					label="Yes" 
+					checked="false"
+					tooltiptext="&nrlorderit.purchaseorder.received.tooltip;" />
+				<vbox pack="center">
+					<label value="&nrlorderit.on.label;:" />
+				</vbox>
+			</hbox>
+			<hbox>
+				<label value="&nrlorderit.notes.label;:" 
+					width="150" />
+				<textbox id="NRLOrderIt-PurchaseOrder-Form-Notes" 
+					width="250"
+					multiline="true" 
+					tooltiptext="&nrlorderit.purchaseorder.notes.tooltip;" />
+			</hbox>
+		</vbox>
+		<splitter collapse="before" resizeafter="farthest">
+			<grippy />
+		</splitter>
+		<vbox flex="1">
+			<vbox id="NRLOrderIt-PurchaseOrder-Item-Panel" />
+			<hbox>
+				<spacer flex="1" />
+				<button id="NRLOrderIt-PurchaseOrder-Form-Done" 
+					label="&nrlorderit.done.label;"
+					oncommand="mil.navy.nrl.NRLOrderIt.PurchaseOrder.Form.done();" 
+					tooltiptext="&nrlorderit.purchaseorder.done.tooltip;" />
+				<button id="NRLOrderIt-PurchaseOrder-Form-Reset" 
+					label="&nrlorderit.reset.label;"
+					oncommand="mil.navy.nrl.NRLOrderIt.PurchaseOrder.Form.reset();" 
+					tooltiptext="&nrlorderit.purchaseorder.reset.tooltip;" />
+				<button id="NRLOrderIt-PurchaseOrder-Form-Cancel" 
+					label="&nrlorderit.cancel.label;"
+					oncommand="mil.navy.nrl.NRLOrderIt.PurchaseOrder.Form.cancel();" 
+					tooltiptext="&nrlorderit.purchaseorder.cancel.tooltip;" />
+			</hbox>
+		</vbox>
+	</hbox>
+</overlay>

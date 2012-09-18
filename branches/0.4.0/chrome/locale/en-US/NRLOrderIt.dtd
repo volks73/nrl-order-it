@@ -1,0 +1,143 @@
+<!ENTITY nrlorderit.nrlorderit.label "NRL Order It">
+<!ENTITY nrlorderit.welcome.label "Welcome to NRL Order It!">
+<!ENTITY nrlorderit.preferences.label "Preferences">
+<!ENTITY nrlorderit.fullscreen.label "Fullscreen">
+<!ENTITY nrlorderit.close.label "Close">
+<!ENTITY nrlorderit.tab.purchaseorders.label "Purchase Orders">
+<!ENTITY nrlorderit.tab.companies.label "Companies">
+<!ENTITY nrlorderit.tab.jobordernumbers.label "Job Order Numbers">
+<!ENTITY nrlorderit.new.label "New">
+<!ENTITY nrlorderit.edit.label "Edit">
+<!ENTITY nrlorderit.view.label "View">
+<!ENTITY nrlorderit.goto.label "Go To...">
+<!ENTITY nrlorderit.print.label "Print">
+<!ENTITY nrlorderit.copy.label "Copy">
+<!ENTITY nrlorderit.delete.label "Delete">
+<!ENTITY nrlorderit.submit.label "Submitted">
+<!ENTITY nrlorderit.receive.label "Received">
+<!ENTITY nrlorderit.title.label "Title">
+<!ENTITY nrlorderit.company.label "Company">
+<!ENTITY nrlorderit.jobordernumber.label "Job Order Number">
+<!ENTITY nrlorderit.originator.label "Originator">
+<!ENTITY nrlorderit.deliverto.label "Deliver To">
+<!ENTITY nrlorderit.priority.label "Priority">
+<!ENTITY nrlorderit.selectcode.label "Select a Code">
+<!ENTITY nrlorderit.total.label "Total">
+<!ENTITY nrlorderit.added.label "Added">
+<!ENTITY nrlorderit.required.label "Required">
+<!ENTITY nrlorderit.submitted.label "Submitted">
+<!ENTITY nrlorderit.ordered.label "Ordered">
+<!ENTITY nrlorderit.received.label "Received">
+<!ENTITY nrlorderit.notes.label "Notes">
+<!ENTITY nrlorderit.date.label "Date">
+<!ENTITY nrlorderit.on.label "On">
+<!ENTITY nrlorderit.partnumber.label "Part/Model #">
+<!ENTITY nrlorderit.description.label "Description">
+<!ENTITY nrlorderit.hazmatcode.label "HazMat Code">
+<!ENTITY nrlorderit.unitofissue.label "Unit of Issue">
+<!ENTITY nrlorderit.quantity.label "Qty">
+<!ENTITY nrlorderit.unitprice.label "Unit Price">
+<!ENTITY nrlorderit.currency.symbol "$">
+<!ENTITY nrlorderit.cost.label "Cost">
+<!ENTITY nrlorderit.add.label "Add">
+<!ENTITY nrlorderit.update.label "Update">
+<!ENTITY nrlorderit.remove.label "Remove">
+<!ENTITY nrlorderit.removeall.label "Remove All">
+<!ENTITY nrlorderit.uniqueitems.label "Unique Items">
+<!ENTITY nrlorderit.totalitems.label "Total Items">
+<!ENTITY nrlorderit.done.label "Done">
+<!ENTITY nrlorderit.reset.label "Reset">
+<!ENTITY nrlorderit.cancel.label "Cancel">
+<!ENTITY nrlorderit.name.label "Name">
+<!ENTITY nrlorderit.address.label "Address">
+<!ENTITY nrlorderit.phone.label "Phone">
+<!ENTITY nrlorderit.fax.label "Fax">
+<!ENTITY nrlorderit.website.label "Website">
+<!ENTITY nrlorderit.currentpage.label "+">
+<!ENTITY nrlorderit.accountnumber.label "Account #">
+<!ENTITY nrlorderit.general.label "General">
+<!ENTITY nrlorderit.defaults.label "Defaults">
+<!ENTITY nrlorderit.doubleclicktowebsite.label "Double click to website">
+<!ENTITY nrlorderit.showprintdialog.label "Show Print Dialog">
+<!ENTITY nrlorderit.signaturedate.label "Signature Date">
+<!ENTITY nrlorderit.signaturetitle.label "Signature Title">
+<!ENTITY nrlorderit.yes.label "Yes">
+
+<!ENTITY nrlorderit.statusbar.tooltip "NRL Order It">
+<!ENTITY nrlorderit.preferences.tooltip "Set user defined options">
+<!ENTITY nrlorderit.fullscreen.tooltip "Toggle Fullscreen mode">
+<!ENTITY nrlorderit.close.tooltip "Hides the extension">
+
+<!ENTITY nrlorderit.preference.doubleclicktowebsite.tooltip "If yes, double clicking a company will open a new tab with the company website">
+<!ENTITY nrlorderit.preference.showprintdialog.tooltip "Show the Print Dialog when printing a purchase order. If no, the default printer will be used.">
+<!ENTITY nrlorderit.preference.signaturedate.tooltip "Include today's date on the bottom of the form when generating purchase order as part of the signature line">
+<!ENTITY nrlorderit.preference.originator.tooltip "The default originator when a new purchase order is created">
+<!ENTITY nrlorderit.preference.deliverto.tooltip "The default deliver to destination when a new purchase order is created">
+<!ENTITY nrlorderit.preference.priority.tooltip "The default priority when a new purchase order is created">
+<!ENTITY nrlorderit.preference.daterequired.tooltip "The default number of days from the current day the required date for a purchase order. Set to '0' for the current date.">
+<!ENTITY nrlorderit.preference.unitofissue.tooltip "The default unit of issue when a new item is created">
+<!ENTITY nrlorderit.preference.signaturetitle.tooltip "The default title placed at the bottom of the purchase order next to the signature">
+
+<!ENTITY nrlorderit.purchaseorder.new.tooltip "Creates a new blank purchase order">
+<!ENTITY nrlorderit.purchaseorder.edit.tooltip "Edits an existing purchase order">
+<!ENTITY nrlorderit.purchaseorder.view.tooltip "Displays a formatted purchase order in a new browser tab">
+<!ENTITY nrlorderit.purchaseorder.print.tooltip "Prints the purchase order">
+<!ENTITY nrlorderit.purchaseorder.copy.tooltip "Creates a duplicate of an existing purchase order">
+<!ENTITY nrlorderit.purchaseorder.delete.tooltip "Removes an existing purchase order">
+<!ENTITY nrlorderit.purchaseorder.search.tooltip "Keyword searches all purchase orders and items">
+<!ENTITY nrlorderit.purchaseorder.title.tooltip "A short descriptive phrase to identify the purchase order">
+<!ENTITY nrlorderit.purchaseorder.originator.tooltip "The creator of the purchase order">
+<!ENTITY nrlorderit.purchaseorder.deliverto.tooltip "The destination of the purchase order items upon receipt">
+<!ENTITY nrlorderit.purchaseorder.priority.tooltip "The shipping priority, i.e. standard, rush, overnight, etc.">
+<!ENTITY nrlorderit.purchaseorder.daterequired.tooltip "The desired date for receipt of the purchase order">
+<!ENTITY nrlorderit.purchaseorder.jobordernumber.tooltip "The job order number/account to use for charging the purchase order">
+<!ENTITY nrlorderit.purchaseorder.company.tooltip "The company to purchase the items from">
+<!ENTITY nrlorderit.purchaseorder.submitted.tooltip "Check if the purchase order has been submitted to the business office, today's date will be used unless otherwise specified">
+<!ENTITY nrlorderit.purchaseorder.submitteddate.tooltip "The date the purchase order was submitted to the business office">
+<!ENTITY nrlorderit.purchaseorder.ordered.tooltip "Check if the purchase order has been ordered by the business office, today's date will be used unless otherwise specified">
+<!ENTITY nrlorderit.purchaseorder.ordereddate.tooltip "The date the purchase order was ordered by the business office">
+<!ENTITY nrlorderit.purchaseorder.received.tooltip "Check if the purchase order has been printed, submitted, and received in full, today's date will be used unless otherwise specified">
+<!ENTITY nrlorderit.purchaseorder.receiveddate.tooltip "The date the purchase order was received by the originator">
+<!ENTITY nrlorderit.purchaseorder.notes.tooltip "Additional information about the purchase order, this is not included in the printing of the purchase order">
+<!ENTITY nrlorderit.purchaseorder.done.tooltip "Saves the purchase order">
+<!ENTITY nrlorderit.purchaseorder.reset.tooltip "Clears the form">
+<!ENTITY nrlorderit.purchaseorder.cancel.tooltip "Deletes a new purchase order or forgets all changes to an existing one">
+
+<!ENTITY nrlorderit.item.partnumber.tooltip "The catalog, model, or part number used by the company to identify the item">
+<!ENTITY nrlorderit.item.description.tooltip "A brief description of the item">
+<!ENTITY nrlorderit.item.hazmatcode.tooltip "A Hazmat code must be selected for all items, chemical or not">
+<!ENTITY nrlorderit.item.unitofissue.tooltip "The packaging of the item, i.e. 'ea', 'pack', etc.">
+<!ENTITY nrlorderit.item.quantity.tooltip "The number of this item">
+<!ENTITY nrlorderit.item.unitprice.tooltip "The price per unit of issue">
+<!ENTITY nrlorderit.item.add.tooltip "Adds the item to the purchase order">
+<!ENTITY nrlorderit.item.update.tooltip "Updates the information about item">
+<!ENTITY nrlorderit.item.edit.tooltip "Edits an existing item">
+<!ENTITY nrlorderit.item.remove.tooltip "Removes an existing item">
+<!ENTITY nrlorderit.item.removeall.tooltip "Removes all items from the purchase order">
+
+<!ENTITY nrlorderit.company.new.tooltip "Creates a new company">
+<!ENTITY nrlorderit.company.edit.tooltip "Edits an existing company">
+<!ENTITY nrlorderit.company.delete.tooltip "Removes an existing company">
+<!ENTITY nrlorderit.company.search.tooltip "Keyword search of all companies">
+<!ENTITY nrlorderit.company.name.tooltip "Name of company">
+<!ENTITY nrlorderit.company.address.tooltip "Full address of company">
+<!ENTITY nrlorderit.company.phone.tooltip "Phone number in any format">
+<!ENTITY nrlorderit.company.fax.tooltip "Fax number in any format">
+<!ENTITY nrlorderit.company.website.tooltip "The company home page">
+<!ENTITY nrlorderit.company.currentpage.tooltip "Use the current webpage as the company home page">
+<!ENTITY nrlorderit.company.add.tooltip "Saves the new company">
+<!ENTITY nrlorderit.company.update.tooltip "Saves the change to the existing company">
+<!ENTITY nrlorderit.company.reset.tooltip "Clears the form">
+<!ENTITY nrlorderit.company.cancel.tooltip "Clears the form and forgets all changes">
+
+<!ENTITY nrlorderit.jobordernumber.new.tooltip "Creates a new job order number">
+<!ENTITY nrlorderit.jobordernumber.edit.tooltip "Edits an existing job order number">
+<!ENTITY nrlorderit.jobordernumber.delete.tooltip "Deletes an existing job order number">
+<!ENTITY nrlorderit.jobordernumber.search.tooltip "Keyword searches all job order numbers">
+<!ENTITY nrlorderit.jobordernumber.name.tooltip "A short, representative name to identify the job order number, this does not appear on purchase order forms">
+<!ENTITY nrlorderit.jobordernumber.accountnumber.tooltip "The NRL specified account number">
+<!ENTITY nrlorderit.jobordernumber.description.tooltip "Additional information about the job order number (optional)">
+<!ENTITY nrlorderit.jobordernumber.add.tooltip "Saves the job order number">
+<!ENTITY nrlorderit.jobordernumber.edit.tooltip "Saves the changes to the job order number">
+<!ENTITY nrlorderit.jobordernumber.reset.tooltip "Clears the form">
+<!ENTITY nrlorderit.jobordernumber.cancel.tooltip "Deletes a new job order number or forgets all changes to an existing job order number">

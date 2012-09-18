@@ -1,0 +1,140 @@
+@CHARSET "ISO-8859-1";
+table
+{
+
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	border-spacing: 0px;
+}
+
+td
+{
+	height: 0.32in;
+	border: 1px solid black;
+	font-family: "Times New Roman", Courier, Garamond, serif;
+	font-size: 10pt;
+	margin: 0px;
+	border-bottom-style: none;
+	border-right-style: none;
+	padding-left: 4px;
+}
+
+td.lineItem
+{
+	width: 0.59in;
+}
+
+td.part
+{
+	width: 0.94in;
+}
+
+td.description
+{
+	width: 3.58in;
+}
+
+td.unitOfIssue
+{
+	width: 0.57in;	
+}
+
+td.qty
+{
+	width: 0.42in;
+}
+
+td.unitPrice
+{
+	width: 0.75in;
+}
+
+td.totalCost
+{
+	width: 0.74in;
+	border-right-style: solid;
+}
+
+td.thickBottom
+{
+	border-bottom-width: 3px;
+	border-bottom-style: solid;	
+}
+
+td.open
+{
+	border-style: none;
+	border-right-style: solid;	
+}
+
+td.end
+{
+	border-right-style: solid;	
+}
+
+td.bottom
+{
+	border-bottom-style: solid;	
+}
+
+tr.items
+{
+	text-align: center;	
+}
+
+.shaded
+{
+	background-color: #D3D3D3;
+}
+
+td.phone
+{
+	width: 0.57in; 
+	height: 10pt; 
+	vertical-align: bottom; 
+	border-top-style: none;
+	background-color: #D3D3D3;
+}
+
+td.fax
+{
+	width: 0.57in; 
+	height: 10pt; 
+	vertical-align: bottom; 
+	border-top-style: none;
+	border-bottom-style: solid;
+	border-bottom-width: 3px;
+	background-color: #D3D3D3;
+}
+
+td.phoneField
+{
+	height: 10pt;
+	border-top-style: none;	
+}
+
+td.faxField
+{
+	height: 10pt;
+	border-top-style: none;
+	border-bottom-style: solid;
+	border-bottom-width: 3px;	
+}
+
+#htmlPurchaseOrderForm
+{
+	border: 1px solid black;
+	padding: 2px;
+	width: 7.8in;
+}
+
+#htmlPurchaseOrderTitle
+{
+	width: 7.8in;
+	text-align: center;
+	font-family: "Times New Roman", Courier, Garamond, serif;
+	font-size: 18pt;
+	font-weight: bold;
+}
+

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1/GPL 2.0/LGPL 2.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is NRL Order It.
+   -
+   - The Initial Developer of the Original Code is Christopher R. Field.
+   - Portions created by the Initial Developer are Copyright (C) 2010
+   - the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -   Christopher R. Field <christopher.field.ctr@nrl.navy.mil>
+   -
+   - Alternatively, the contents of this file may be used under the terms of
+   - either the GNU General Public License Version 2 or later (the "GPL"), or
+   - the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+   - in which case the provisions of the GPL or the LGPL are applicable instead
+   - of those above. If you wish to allow use of your version of this file only
+   - under the terms of either the GPL or the LGPL, and not to allow others to
+   - use your version of this file under the terms of the MPL, indicate your
+   - decision by deleting the provisions above and replace them with the notice
+   - and other provisions required by the LGPL or the GPL. If you do not delete
+   - the provisions above, a recipient may use your version of this file under
+   - the terms of any one of the MPL, the GPL or the LGPL.
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<?xml-stylesheet href="chrome://global/skin/global.css"?>
+<!DOCTYPE prefwindow SYSTEM "chrome://NRLOrderIt/locale/NRLOrderIt.dtd">
+<prefwindow id="NRLOrderIt-Preferences" title="NRL Order It Form Defaults" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<prefpane id="NRLOrderIt-Pref-General" label="&nrlorderit.general.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Prefs_General-32x32.png">
+		<preferences>
+			<preference id="NRLOrderIt-Pref-DoubleClickToWebsite" name="nrlorderit.general.doubleclicktowebsite" type="bool"/>
+			<preference id="NRLOrderIt-Pref-Print" name="nrlorderit.general.print" type="bool"/>
+			<preference id="NRLOrderIt-Pref-CloseOnPrint" name="nrlorderit.general.closeonprint" type="bool"/>
+			<preference id="NRLOrderIt-Pref-SignatureDate" name="nrlorderit.general.signaturedate" type="bool"/>
+		</preferences>
+		
+		<hbox tooltiptext="&nrlorderit.preference.doubleclicktowebsite.tooltip;">
+			<vbox>
+				<spacer flex="1"/>
+				<label value="&nrlorderit.doubleclicktowebsite.label;:" width="200"/>
+				<spacer flex="1"/>
+			</vbox>
+			
+			<checkbox preference="NRLOrderIt-Pref-DoubleClickToWebsite" label="&nrlorderit.yes.label;"/>
+		</hbox>
+		<hbox tooltiptext="&nrlorderit.preference.printaftergenerate.tooltip;">
+			<vbox>
+				<spacer flex="1"/>
+				<label value="&nrlorderit.printaftergenerate.label;:" width="200"/>
+				<spacer flex="1"/>
+			</vbox>
+			
+			<checkbox preference="NRLOrderIt-Pref-Print" label="&nrlorderit.yes.label;"/>
+		</hbox>
+		<hbox tooltiptext="&nrlorderit.preference.closeafterprint.tooltip;">
+			<vbox>
+				<spacer flex="1"/>
+				<label value="&nrlorderit.closeafterprint.label;:" width="200"/>
+				<spacer flex="1"/>
+			</vbox>			
+			<checkbox preference="NRLOrderIt-Pref-CloseOnPrint" label="&nrlorderit.yes.label;"/>
+		</hbox>
+		<hbox tooltiptext="&nrlorderit.preference.signaturedate.tooltip;">
+			<vbox>
+				<spacer flex="1"/>
+				<label value="&nrlorderit.signaturedate.label;:" width="200"/>
+				<spacer flex="1"/>
+			</vbox>
+			<checkbox preference="NRLOrderIt-Pref-SignatureDate" label="&nrlorderit.yes.label;"/>
+		</hbox>
+	</prefpane>
+	<prefpane id="NRLOrderIt-Pref-Defaults" label="&nrlorderit.defaults.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Prefs_Defaults-32x32.png">
+		<preferences>
+			<preference id="NRLOrderIt-Pref-Originator" name="nrlorderit.default.originator" type="string"/> 
+			<preference id="NRLOrderIt-Pref-DeliverTo" name="nrlorderit.default.deliverto" type="string"/>
+			<preference id="NRLOrderIt-Pref-Priority" name="nrlorderit.default.priority" type="string"/>
+			<preference id="NRLOrderIt-Pref-UnitOfIssue" name="nrlorderit.default.unitofissue" type="string"/>
+			<preference id="NRLOrderIt-Pref-SignatureTitle" name="nrlorderit.default.signaturetitle" type="string"/>
+		</preferences>
+		
+		<hbox tooltiptext="&nrlorderit.preference.originator.tooltip;">
+			<vbox>
+				<spacer flex="1"/>
+				<label value="&nrlorderit.originator.label;:" width="100"/>
+				<spacer flex="1"/>
+			</vbox>
+			<textbox preference="NRLOrderIt-Pref-Originator"/>
+		</hbox>
+		<hbox tooltiptext="&nrlorderit.preference.deliverto.tooltip;">
+			<vbox>
+				<spacer flex="1"/>
+				<label value="&nrlorderit.deliverto.label;:" width="100"/>
+				<spacer flex="1"/>
+			</vbox>
+			<textbox preference="NRLOrderIt-Pref-DeliverTo"/>
+		</hbox>
+		<hbox tooltiptext="&nrlorderit.preference.priority.tooltip;">
+			<vbox>
+				<spacer flex="1"/>
+				<label value="&nrlorderit.priority.label;:" width="100"/>
+				<spacer flex="1"/>
+			</vbox>
+			<textbox preference="NRLOrderIt-Pref-Priority"/>
+		</hbox>
+		<hbox tooltiptext="&nrlorderit.preference.unitofissue.tooltip;">
+			<vbox>
+				<spacer flex="1"/>
+				<label value="&nrlorderit.unitofissue.label;:" width="100"/>
+				<spacer flex="1"/>
+			</vbox>
+			<textbox preference="NRLOrderIt-Pref-UnitOfIssue"/>
+		</hbox>
+		<hbox tooltiptext="&nrlorderit.preference.signaturetitle.tooltip;">
+			<vbox>
+				<spacer flex="1"/>
+				<label value="&nrlorderit.signaturetitle.label;:" width="100"/>
+				<spacer flex="1"/>
+			</vbox>
+			<textbox preference="NRLOrderIt-Pref-SignatureTitle"/>
+		</hbox>
+	</prefpane>
+</prefwindow>

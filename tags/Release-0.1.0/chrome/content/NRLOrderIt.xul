@@ -1,0 +1,710 @@
+<?xml version="1.0"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1/GPL 2.0/LGPL 2.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is NRL Order It.
+   -
+   - The Initial Developer of the Original Code is Christopher R. Field.
+   - Portions created by the Initial Developer are Copyright (C) 2010
+   - the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -   Christopher R. Field <christopher.field.ctr@nrl.navy.mil>
+   -
+   - Alternatively, the contents of this file may be used under the terms of
+   - either the GNU General Public License Version 2 or later (the "GPL"), or
+   - the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+   - in which case the provisions of the GPL or the LGPL are applicable instead
+   - of those above. If you wish to allow use of your version of this file only
+   - under the terms of either the GPL or the LGPL, and not to allow others to
+   - use your version of this file under the terms of the MPL, indicate your
+   - decision by deleting the provisions above and replace them with the notice
+   - and other provisions required by the LGPL or the GPL. If you do not delete
+   - the provisions above, a recipient may use your version of this file under
+   - the terms of any one of the MPL, the GPL or the LGPL.
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<!DOCTYPE overlay SYSTEM "chrome://NRLOrderIt/locale/NRLOrderIt.dtd">
+<overlay id="NRLOrderIt" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+	<script type="application/x-javascript" src="chrome://NRLOrderIt/content/NRLOrderIt.js"/>
+	<script type="application/x-javascript" src="chrome://NRLOrderIt/content/jsPrintSetup.js"/>
+	<script type="application/x-javascript" src="chrome://NRLOrderIt/content/PurchaseOrder.js"/>
+	<script type="application/x-javascript" src="chrome://NRLOrderIt/content/JobOrderNumber.js"/>
+	<script type="application/x-javascript" src="chrome://NRLOrderIt/content/Company.js"/>	
+
+	<vbox id="appcontent">
+		<splitter id="NRLOrderIt-splitter" resizebefore="closest" resizeafter="closest" hidden="true"/>
+		<vbox id="NRLOrderIt-pane" hidden="true" height="300" persist="height">
+			<hbox id="NRLOrderIt-toolbar" class="toolbar">
+				<vbox>
+					<spacer flex="1"/>
+					<label id="NRLOrderIt-message" value="&nrlorderit.welcome.label;"/>
+					<spacer flex="1"/>
+				</vbox>				
+				<spacer flex="1"/>
+				<button id="NRLOrderIt-Pref" label="&nrlorderit.preferences.label;" oncommand="NRLOrderIt.displayPreferences();" tooltiptext="&nrlorderit.preferences.tooltip;"/>
+				<button id="NRLOrderIt-Close" label="&nrlorderit.close.label;" oncommand="NRLOrderIt.toggleDisplay();" tooltiptext="&nrlorderit.close.tooltip;"/>
+			</hbox>
+			<tabbox flex="1">
+				<tabs>
+					<tab label="&nrlorderit.tab.purchaseorders.label;"/>
+					<tab label="&nrlorderit.tab.companies.label;"/>
+					<tab label="&nrlorderit.tab.jobordernumbers.label;"/>
+				</tabs>
+				<tabpanels flex="1">
+					<tabpanel flex="1">
+						<vbox flex="1" id="NRLOrderIt-PurchaseOrders" hidden="false">
+							<hbox>
+								<button label="&nrlorderit.new.label;" oncommand="PurchaseOrder.add();" tooltiptext="&nrlorderit.purchaseorder.new.tooltip;"/>
+								<button label="&nrlorderit.edit.label;" oncommand="PurchaseOrder.edit();" tooltiptext="&nrlorderit.purchaseorder.edit.tooltip;"/>
+								<button label="&nrlorderit.generate.label;" oncommand="PurchaseOrder.generate();" tooltiptext="&nrlorderit.purchaseorder.generate.tooltip;"/>
+								<button label="&nrlorderit.copy.label;" oncommand="PurchaseOrder.copy();" tooltiptext="&nrlorderit.purchaseorder.copy.tooltip;"/>								
+								<button label="&nrlorderit.delete.label;" oncommand="PurchaseOrder.remove();" tooltiptext="&nrlorderit.purchaseorder.delete.tooltip;"/>								
+								<textbox id="NRLOrderIt-PurchaseOrder-Search" type="search" searchbutton="true" oncommand="PurchaseOrder.search();" tooltiptext="&nrlorderit.purchaseorder.search.tooltip;"/>
+								<spacer flex="1"/>
+							</hbox>
+							<menupopup id="NRLOrderIt-PurchaseOrder-ContextMenu">
+								<menuitem label="&nrlorderit.edit.label;" oncommand="PurchaseOrder.edit();"/>
+								<menuitem label="&nrlorderit.generate.label;" oncommand="PurchaseOrder.generate();"/>
+								<menuitem label="&nrlorderit.copy.label;" oncommand="PurchaseOrder.copy();"/>
+								<menuitem label="&nrlorderit.delete.label;" oncommand="PurchaseOrder.remove();"/>
+							</menupopup>
+							<tree id="NRLOrderIt-PurchaseOrder-Tree" 
+								  seltype="single" 
+								  editable="false" 
+								  datasources="rdf:null"
+								  ref="*" 
+								  querytype="storage"									   
+								  flags="dont-build-content"
+								  enableColumnDrag="true"
+								  flex="2"
+								  ondblclick="PurchaseOrder.edit();"
+								  context="NRLOrderIt-PurchaseOrder-ContextMenu">
+								<treecols>									
+									<treecol id="NRLOrderIt-PurchaseOrder-Tree-Title" label="&nrlorderit.title.label;" width="250" sort="?title" persist="width ordinal hidden sortActive sortDirection"/>
+									<splitter class="tree-splitter"/>
+									<treecol id="NRLOrderIt-PurchaseOrder-Tree-Company" label="&nrlorderit.company.label;" width="250" sort="?company" persist="width ordinal hidden sortActive sortDirection"/>
+									<splitter class="tree-splitter"/>
+									<treecol id="NRLOrderIt-PurchaseOrder-Tree-JobOrderNumber" label="&nrlorderit.jobordernumber.label;" width="150" sort="?jobOrderNumber" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
+									<splitter class="tree-splitter"/>
+									<treecol id="NRLOrderIt-PurchaseOrder-Tree-Originator" label="&nrlorderit.originator.label;" width="150" sort="?originator" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
+									<splitter class="tree-splitter"/>
+									<treecol id="NRLOrderIt-PurchaseOrder-Tree-DeliverTo" label="&nrlorderit.deliverto.label;" width="75" sort="?deliver_to" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
+									<splitter class="tree-splitter"/>
+									<treecol id="NRLOrderIt-PurchaseOrder-Tree-Priority" label="&nrlorderit.priority.label;" width="75" sort="?priority" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
+									<splitter class="tree-splitter"/>																									
+									<treecol id="NRLOrderIt-PurchaseOrder-Tree-Total" label="&nrlorderit.total.label; &nrlorderit.currency.symbol;" width="70" sort="?total" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
+									<splitter class="tree-splitter"/>
+									<treecol id="NRLOrderIt-PurchaseOrder-Tree-DateAdded" label="&nrlorderit.added.label;" width="100" sort="?dateAddedTime" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
+									<splitter class="tree-splitter"/>
+									<treecol id="NRLOrderIt-PurchaseOrder-Tree-DateRequired" label="&nrlorderit.required.label;" width="100" sort="?dateRequiredTime" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
+									<splitter class="tree-splitter"/>									
+									<treecol id="NRLOrderIt-PurchaseOrder-Tree-DateSubmitted" label="&nrlorderit.submitted.label;" width="100" sort="?dateSubmittedTime" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
+									<splitter class="tree-splitter"/>
+									<treecol id="NRLOrderIt-PurchaseOrder-Tree-DateReceived" label="&nrlorderit.received.label;" width="100" sort="?dateReceivedTime" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
+									<splitter class="tree-splitter"/>																										
+									<treecol id="NRLOrderIt-PurchaseOrder-Tree-Notes" label="&nrlorderit.notes.label;" flex="1"/>
+									<splitter class="tree-splitter"/>
+								</treecols>
+								<template>
+									<query>
+										SELECT 
+											purchase_orders.purchase_orders_id as purchaseOrdersId, 
+											title, 
+											originator, 
+											deliver_to, 
+											priority, 
+											strftime('%m/%d/%Y', datetime(date_required, 'unixepoch')) as dateRequired, 
+											date_required as dateRequiredTime, 
+											strftime('%m/%d/%Y', datetime(purchase_orders.date_added, 'unixepoch')) as dateAdded,
+											purchase_orders.date_added as dateAddedTime, 
+											strftime('%m/%d/%Y', datetime(date_submitted, 'unixepoch')) as dateSubmitted,						
+											date_submitted as dateSubmittedTime,
+											strftime('%m/%d/%Y', datetime(date_received, 'unixepoch')) as dateReceived,						
+											date_received as dateReceivedTime,
+											notes, 
+											purchase_orders.companies_id, 
+											companies.name as company, 
+											purchase_orders.job_order_numbers_id, 
+											job_order_numbers.name as jobOrderNumber, 
+											(CAST(SUM(items.unit_price * items.quantity) AS INT) || '.' || substr(ROUND(SUM(items.unit_price * items.quantity) * 100), -2, -2)) AS total											  
+										FROM 
+											purchase_orders 
+										OUTER LEFT JOIN 
+											items 
+										ON 
+											purchase_orders.purchase_orders_id = items.purchase_orders_id 
+										OUTER LEFT JOIN 
+											companies 
+										ON 
+											purchase_orders.companies_id = companies.companies_id 
+										OUTER LEFT JOIN 
+											job_order_numbers 
+										ON 
+											purchase_orders.job_order_numbers_id = job_order_numbers.job_order_numbers_id
+										WHERE
+											(title LIKE :like 
+											OR 
+											originator LIKE :like 
+											OR 
+											deliver_to LIKE :like 
+											OR 
+											priority LIKE :like 
+											OR 
+											notes LIKE :like 
+											OR 
+											companies.name LIKE :like 
+											OR 
+											job_order_numbers.name LIKE :like
+											OR
+											items.part_number LIKE :like
+											OR
+											items.description LIKE :like)
+										GROUP BY 
+											purchase_orders.purchase_orders_id
+										<param name="like" id="NRLOrderIt-PurchaseOrder-Like" type="string">%</param>
+									</query>									
+									<action>
+										<treechildren flex="1">
+											<treeitem uri="?" >
+												<treerow>													
+													<treecell label="?title" value="?purchaseOrdersId"/>
+													<treecell label="?company" value="?companies_id"/>
+													<treecell label="?jobOrderNumber" value="?job_order_numbers_id"/>
+													<treecell label="?originator"/>
+													<treecell label="?deliver_to"/>
+													<treecell label="?priority"/>													
+													<treecell label="?total"/>
+													<treecell label="?dateAdded" value="?dateAddedTime"/>
+													<treecell label="?dateRequired" value="?dateRequiredTime"/>
+													<treecell label="?dateSubmitted" value="?dateSubmittedTime"/>
+													<treecell label="?dateReceived" value="?dateReceivedTime"/>												
+													<treecell label="?notes"/>
+												</treerow>
+											</treeitem>										
+										</treechildren>
+									</action>										
+								</template>
+							</tree>
+						</vbox>
+						<vbox flex="1" id="NRLOrderIt-PurchaseOrder-Form" hidden="true">
+							<hbox flex="1">
+								<vbox>									
+									<hbox>
+										<label value="&nrlorderit.title.label;:" width="100"/>
+										<textbox id="NRLOrderIt-PurchaseOrder-Form-Title" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.purchaseorder.title.tooltip;"/>
+									</hbox>
+									<hbox>
+										<label value="&nrlorderit.originator.label;:" width="100"/>
+										<textbox id="NRLOrderIt-PurchaseOrder-Form-Originator" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.purchaseorder.originator.tooltip;"/>
+									</hbox>
+									<hbox>
+										<label value="&nrlorderit.deliverto.label;:" width="100"/>
+										<textbox id="NRLOrderIt-PurchaseOrder-Form-DeliverTo" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.purchaseorder.deliverto.tooltip;"/>
+									</hbox>
+									<hbox>
+										<label value="&nrlorderit.priority.label;:" width="100"/>
+										<textbox id="NRLOrderIt-PurchaseOrder-Form-Priority" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.purchaseorder.priority.tooltip;"/>
+									</hbox>
+									<hbox>
+										<label value="&nrlorderit.date.label; &nrlorderit.required.label;:" width="100"/>
+										<datepicker id="NRLOrderIt-PurchaseOrder-Form-DateRequired" type="popup" tooltiptext="&nrlorderit.purchaseorder.daterequired.tooltip;"/>
+									</hbox>
+									<hbox>
+										<label value="&nrlorderit.jobordernumber.label;:" width="100"/>
+										<menulist id="NRLOrderIt-PurchaseOrder-Form-JobOrderNumber" 
+												  datasources="rdf:null" 
+												  ref="*" 
+												  querytype="storage"
+												  crop="end" 
+												  editable="false"
+												  width="250"
+												  sort="?name" 
+												  onkeypress="NRLOrderIt.advanceFocus(event);"
+												  tooltiptext="&nrlorderit.purchaseorder.jobordernumber.tooltip;">
+											<template>
+												<query>
+													SELECT 
+														job_order_numbers_id, 
+														name 
+													FROM 
+														job_order_numbers 
+													WHERE 
+														date_deleted ISNULL
+												</query>
+												<rule>
+													<action>
+														<menupopup>
+															<menuitem label="&nrlorderit.selectjobordernumber.label;" value="-1" disabled="true"/>
+															<menuitem uri="?" label="?name" value="?job_order_numbers_id"/>
+														</menupopup>
+													</action>																
+												</rule>																
+											</template>															
+										</menulist>
+									</hbox>
+									<hbox>
+										<label value="&nrlorderit.company.label;:" width="100"/>
+										<menulist id="NRLOrderIt-PurchaseOrder-Form-Company" 
+												  datasources="rdf:null" 
+												  ref="*" 
+												  querytype="storage"
+												  crop="end" 
+												  editable="false"
+												  width="250"
+												  sort="?name"
+												  onkeypress="NRLOrderIt.advanceFocus(event);"
+												  tooltiptext="&nrlorderit.purchaseorder.company.tooltip;">
+											<template>
+												<query>
+													SELECT 
+														companies_id, 
+														name 
+													FROM 
+														companies 
+													WHERE 
+														date_deleted ISNULL
+												</query>
+												<action>
+													<menupopup>
+														<menuitem label="&nrlorderit.selectcompany.label;" value="-1" disabled="true"/>
+														<menuitem uri="?" label="?name" value="?companies_id"/>
+													</menupopup>
+												</action>															
+											</template>
+										</menulist>
+									</hbox>
+									<hbox>
+										<vbox>
+											<spacer flex="1"/>
+											<label value="&nrlorderit.submitted.label;:" width="100"/>
+											<spacer flex="1"/>
+										</vbox>
+										<checkbox id="NRLOrderIt-PurchaseOrder-Form-Submitted" label="Yes" checked="false" tooltiptext="&nrlorderit.purchaseorder.submitted.tooltip;"/>
+										<vbox>
+											<spacer flex="1"/>
+											<label value="&nrlorderit.on.label;:"/>
+											<spacer flex="1"/>
+										</vbox>										
+										<datepicker id="NRLOrderIt-PurchaseOrder-Form-DateSubmitted" type="popup" tooltiptext="&nrlorderit.purchaseorder.submitteddate.tooltip;"/>							
+									</hbox>
+									<hbox>
+										<vbox>
+											<spacer flex="1"/>
+											<label value="&nrlorderit.received.label;:" width="100"/>
+											<spacer flex="1"/>
+										</vbox>
+										<checkbox id="NRLOrderIt-PurchaseOrder-Form-Received" label="Yes" checked="false" tooltiptext="&nrlorderit.purchaseorder.received.tooltip;"/>																				
+										<vbox>
+											<spacer flex="1"/>
+											<label value="&nrlorderit.on.label;:"/>
+											<spacer flex="1"/>
+										</vbox>																		
+										<datepicker id="NRLOrderIt-PurchaseOrder-Form-DateReceived" type="popup" tooltiptext="&nrlorderit.purchaseorder.receiveddate.tooltip;"/>
+									</hbox>									
+									<hbox>
+										<label value="&nrlorderit.notes.label;:" width="100"/>
+										<textbox id="NRLOrderIt-PurchaseOrder-Form-Notes" width="250" multiline="true" tooltiptext="&nrlorderit.purchaseorder.notes.tooltip;"/>
+									</hbox>																					
+								</vbox>											
+								<vbox flex="1">
+										<hbox>														
+											<vbox>
+												<label value="&nrlorderit.partnumber.label;:"/>
+												<textbox id="NRLOrderIt-Item-Form-PartNumber" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.item.partnumber.tooltip;"/>
+											</vbox>
+											<vbox flex="2">
+												<label value="&nrlorderit.description.label;:"/>
+												<textbox id="NRLOrderIt-Item-Form-Description" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.item.description.tooltip;"/>
+											</vbox>
+											<vbox width="150">
+												<label value="&nrlorderit.hazmatcode.label;:" style="text-align:center;"/>
+												<menulist id="NRLOrderIt-Item-Form-HazmatCode" 
+														  datasources="rdf:null" 
+														  ref="*" 
+														  querytype="storage"
+														  crop="end" 
+														  editable="false" 
+														  onkeypress="NRLOrderIt.advanceFocus(event);"
+														  tooltiptext="&nrlorderit.item.hazmatcode.tooltip;"
+														  sort="?letter"
+														  sortDirection="ascending">
+													<template>
+														<query>
+															SELECT 
+																hazmat_codes_id, 
+																letter, 
+																description 
+															FROM 
+																hazmat_codes
+														</query>
+														<action>
+															<menupopup>
+																<menuitem label="&nrlorderit.selectcode.label;" value="-1" disabled="true"/>
+																<menuitem uri="?" label="?letter - ?description" value="?hazmat_codes_id" style="max-width:none;" crop="none"/>
+															</menupopup>																	
+														</action>																																
+													</template>																
+												</menulist>
+											</vbox>
+											<vbox width="75">
+												<label value="&nrlorderit.unitofissue.label;:"/>
+												<textbox id="NRLOrderIt-Item-Form-UnitOfIssue" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.item.unitofissue.tooltip;"/>
+											</vbox>
+											<vbox width="50">
+												<label value="&nrlorderit.quantity.label;:" style="text-align:center;"/>
+												<textbox id="NRLOrderIt-Item-Form-Quantity" type="number" hidespinbuttons="false" min="1" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.item.quantity.tooltip;"/>
+											</vbox>
+											<vbox width="75">
+												<label value="&nrlorderit.unitprice.label; &nrlorderit.currency.symbol;:"/>
+												<textbox id="NRLOrderIt-Item-Form-UnitPrice" type="number" decimalplaces="2" hidespinbuttons="false" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.item.unitprice.tooltip;"/>
+											</vbox>														
+											<vbox>
+												<spacer flex="1"/>
+												<button id="NRLOrderIt-Item-Form-Add" label="&nrlorderit.add.label;" oncommand="PurchaseOrder.addItem();" tooltiptext="&nrlorderit.item.add.tooltip;"/>
+												<button id="NRLOrderIt-Item-Form-Update" label="&nrlorderit.update.label;" oncommand="PurchaseOrder.updateItem();" hidden="true" tooltiptext="&nrlorderit.item.update.tooltip;"/>
+											</vbox>																									
+										</hbox>
+										<separator class="groove"/>
+										<menupopup id="NRLOrderIt-Item-ContextMenu">
+											<menuitem label="&nrlorderit.edit.label;" oncommand="PurchaseOrder.editItem();"/>
+											<menuitem label="&nrlorderit.delete.label;" oncommand="PurchaseOrder.removeItem();"/>
+										</menupopup>													
+										<tree id="NRLOrderIt-Item-Tree"  
+									  		  seltype="single" 
+									  		  editable="false" 
+									  		  datasources="rdf:null"
+									  		  ref="*" 
+									  		  querytype="storage"									   
+									  		  flags="dont-build-content"
+									  		  enableColumnDrag="true"
+									  		  flex="2"
+									  		  ondblclick="PurchaseOrder.editItem();"
+									  		  context="NRLOrderIt-Item-ContextMenu">
+											<treecols> 
+												<treecol id="NRLOrderIt-Item-Tree-PartNumber" label="&nrlorderit.partnumber.label;" width="150" sort="?part_number" persist="width ordinal hidden sortActive sortDirection"/>
+												<splitter class="tree-splitter"/>
+												<treecol id="NRLOrderIt-Item-Tree-Description" label="&nrlorderit.description.label;" flex="1" persist="width ordinal hidden"/>
+												<splitter class="tree-splitter"/>
+												<treecol id="NRLOrderIt-Item-Tree-HazmatCode" label="&nrlorderit.hazmatcode.label;" width="150" style="text-align:center;" persist="width ordinal hidden"/>
+												<splitter class="tree-splitter"/>						
+												<treecol id="NRLOrderIt-Item-Tree-UnitOfIssue" label="&nrlorderit.unitofissue.label;" width="75" style="text-align:center;" persist="width ordinal hidden"/>
+												<splitter class="tree-splitter"/>
+												<treecol id="NRLOrderIt-Item-Tree-Quantity" label="&nrlorderit.quantity.label;" width="50" type="text" sort="?quantity" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
+												<splitter class="tree-splitter"/>
+												<treecol id="NRLOrderIt-Item-Tree-UnitPrice" label="&nrlorderit.unitprice.label; &nrlorderit.currency.symbol;" width="75" sort="?unit_price" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
+												<splitter class="tree-splitter"/>
+												<treecol id="NRLOrderIt-Item-Tree-TotalCost" label="&nrlorderit.total.label; &nrlorderit.cost.label; &nrlorderit.currency.symbol;" width="75" sort="?totalCost" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
+												<splitter class="tree-splitter"/>
+												<treecol id="NRLOrderIt-Item-Tree-DateAdded" label="&nrlorderit.date.label; &nrlorderit.added.label;" width="75" sort="?dateAddedTime" style="text-align:center;" hidden="true" persist="width ordinal hidden sortActive sortDirection"/>
+												<splitter class="tree-splitter"/>
+											</treecols>
+											<template>
+												<query>
+													SELECT 
+														items_id, 
+														part_number, 
+														items.description as description, 
+														letter, 
+														hazmat_codes.description as hazmatCodesDescription, 
+														items.hazmat_codes_id as hazmatCodesId, 
+														unit_of_issue, 
+														CAST(unit_price AS INT) || '.' || substr(ROUND(unit_price * 100), -2, -2) AS unitPrice, 
+														quantity,
+														CAST(unit_price * quantity AS INT) || '.' || substr(ROUND(unit_price * quantity * 100), -2, -2) AS totalCost,														
+														strftime('%m/%d/%Y', datetime(date_added, 'unixepoch')) as dateAdded, 
+														date_added as dateAddedTime 
+													FROM 
+														items, 
+														hazmat_codes 
+													WHERE 
+														items.hazmat_codes_id = hazmat_codes.hazmat_codes_id 
+													AND 
+														purchase_orders_id = :purchaseOrdersId
+													<param id="purchaseOrdersId" name="purchaseOrdersId" type="integer">0</param> 
+												</query>
+												<action>
+													<treechildren flex="1">
+														<treeitem uri="?">
+															<treerow>
+																<treecell label="?part_number" value="?items_id" />
+																<treecell label="?description"/>
+																<treecell label="?letter - ?hazmatCodesDescription" value="?hazmatCodesId"/>
+																<treecell label="?unit_of_issue"/>
+																<treecell label="?quantity"/>
+																<treecell label="?unitPrice"/>
+																<treecell label="?totalCost"/>
+																<treecell label="?dateAdded" value="?dateAddedTime"/>
+															</treerow>
+														</treeitem>										
+													</treechildren>
+												</action>										
+											</template>
+										</tree>													
+										<hbox>
+											<button label="&nrlorderit.edit.label;" oncommand="PurchaseOrder.editItem();" tooltiptext="&nrlorderit.item.edit.tooltip;"/>
+											<button label="&nrlorderit.remove.label;" oncommand="PurchaseOrder.removeItem();" tooltiptext="&nrlorderit.item.remove.tooltip;"/>
+											<button label="&nrlorderit.removeall.label;" oncommand="PurchaseOrder.removeAllItems();" tooltiptext="&nrlorderit.item.removeall.tooltip;"/>
+											<spacer flex="1"/>
+											<vbox>
+												<spacer flex="1"/>
+												<hbox>
+													<label value="&nrlorderit.uniqueitems.label;:"/>
+													<label id="NRLOrderIt-Item-UniqueQuantity" value="0"/>
+													<label value="&nrlorderit.totalitems.label;:"/>
+													<label id="NRLOrderIt-Item-TotalQuantity" value="0"/>
+													<label value="&nrlorderit.total.label;: &nrlorderit.currency.symbol;"/>
+													<label id="NRLOrderIt-Item-Total" value="0"/>	
+												</hbox>
+											</vbox>														
+										</hbox>
+										<hbox>
+											<spacer flex="1"/>
+											<button id="NRLOrderIt-PurchaseOrder-Form-Done" label="&nrlorderit.done.label;" oncommand="PurchaseOrder.done();" tooltiptext="&nrlorderit.purchaseorder.done.tooltip;"/>
+											<button id="NRLOrderIt-PurchaseOrder-Form-Reset" label="&nrlorderit.reset.label;" oncommand="PurchaseOrder.reset();" tooltiptext="&nrlorderit.purchaseorder.reset.tooltip;"/>
+											<button id="NRLOrderIt-PurchaseOrder-Form-Cancel" label="&nrlorderit.cancel.label;" oncommand="PurchaseOrder.cancel();" tooltiptext="&nrlorderit.purchaseorder.cancel.tooltip;"/>
+										</hbox>
+									</vbox>
+							</hbox>															
+						</vbox>
+					</tabpanel>
+					<tabpanel flex="1">
+						<vbox flex="1">
+							<hbox>
+								<button label="&nrlorderit.new.label;" oncommand="Company.showAddForm();" tooltiptext="&nrlorderit.company.new.tooltip;"/>
+								<button label="&nrlorderit.edit.label;" oncommand="Company.showUpdateForm();" tooltiptext="&nrlorderit.company.edit.tooltip;"/>
+								<button label="&nrlorderit.delete.label;" oncommand="Company.remove();" tooltiptext="&nrlorderit.company.delete.tooltip;"/>
+								<textbox id="NRLOrderIt-Company-Search" type="search" searchbutton="true" oncommand="Company.search();" tooltiptext="&nrlorderit.company.search.tooltip;"/>
+								<spacer flex="1"/>
+							</hbox>	
+							<hbox flex="1">							
+								<vbox id="NRLOrderIt-Company-Form" hidden="true">
+									<hbox>
+										<label value="&nrlorderit.name.label;:" width="100"/>
+										<textbox id="NRLOrderIt-Company-Form-Name" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.company.name.tooltip;"/>
+									</hbox>
+									<hbox>
+										<label value="&nrlorderit.address.label;:" width="100"/>
+										<textbox id="NRLOrderIt-Company-Form-Address" width="250" multiline="true" tooltiptext="&nrlorderit.company.address.tooltip;"/>
+									</hbox>
+									<hbox>
+										<label value="&nrlorderit.phone.label;:" width="100"/>
+										<textbox id="NRLOrderIt-Company-Form-Phone" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.company.phone.tooltip;"/>
+									</hbox>
+									<hbox>
+										<label value="&nrlorderit.fax.label;:" width="100"/>
+										<textbox id="NRLOrderIt-Company-Form-Fax" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.company.fax.tooltip;"/>
+									</hbox>
+									<hbox>
+										<label value="&nrlorderit.website.label;:" width="100"/>
+										<textbox id="NRLOrderIt-Company-Form-Website" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.company.website.tooltip;"/>
+									</hbox>
+									<hbox>
+										<spacer flex="1"/>
+										<button id="NRLOrderIt-Company-Form-Add" label="&nrlorderit.add.label;" oncommand="Company.add();" tooltiptext="&nrlorderit.company.add.tooltip;"/>
+										<button id="NRLOrderIt-Company-Form-Update" label="&nrlorderit.update.label;" oncommand="Company.edit();" hidden="true" tooltiptext="&nrlorderit.company.update.tooltip;"/>
+										<button id="NRLOrderIt-Company-Form-Reset" label="&nrlorderit.reset.label;" oncommand="Company.resetForm();" tooltiptext="&nrlorderit.company.reset.tooltip;"/>
+										<button id="NRLOrderIt-Company-Form-Cancel" label="&nrlorderit.cancel.label;" oncommand="Company.cancelForm();" tooltiptext="&nrlorderit.company.cancel.tooltip;"/>
+									</hbox>								
+								</vbox>
+								<menupopup id="NRLOrderIt-Company-ContextMenu">
+									<menuitem label="&nrlorderit.edit.label;" oncommand="Company.showUpdateForm();"/>
+									<menuitem label="&nrlorderit.delete.label;" oncommand="Company.remove();"/>
+								</menupopup>																			
+								<tree id="NRLOrderIt-Company-Tree" 
+									  seltype="single" 
+									  editable="false" 
+									  datasources="rdf:null"
+									  ref="*" 
+									  querytype="storage"									   
+									  flags="dont-build-content"
+									  enableColumnDrag="true"
+									  flex="1"
+									  ondblclick="Company.showUpdateForm();"
+									  context="NRLOrderIt-Company-ContextMenu">
+									<treecols>
+										<treecol id="NRLOrderIt-Company-Tree-Name" label="&nrlorderit.name.label;" width="250" sort="?name" persist="width ordinal hidden sortActive sortDirection"/>
+										<splitter class="tree-splitter"/>
+										<treecol id="NRLOrderIt-Company-Tree-Address" label="&nrlorderit.address.label;" width="200" flex="1" persist="width ordinal hidden"/>
+										<splitter class="tree-splitter"/>
+										<treecol id="NRLOrderIt-Company-Tree-Phone" label="&nrlorderit.phone.label;" width="100" persist="width ordinal hidden"/>
+										<splitter class="tree-splitter"/>
+										<treecol id="NRLOrderIt-Company-Tree-Fax" label="&nrlorderit.fax.label;" width="100" persist="width ordinal hidden"/>
+										<splitter class="tree-splitter"/>						
+										<treecol id="NRLOrderIt-Company-Tree-Website" label="&nrlorderit.website.label;" width="400" persist="width ordinal hidden"/>
+										<splitter class="tree-splitter"/>
+										<treecol id="NRLOrderIt-Company-Tree-DateAdded" label="&nrlorderit.date.label; &nrlorderit.added.label;" width="100" sort="?dateAddedTime" persist="width ordinal hidden sortActive sortDirection" style="text-align:center;"/>
+										<splitter class="tree-splitter"/>
+									</treecols>
+									<template>
+										<query>
+											SELECT 
+												companies_id, 
+												name, 
+												address, 
+												phone, 
+												fax, 
+												website, 
+												strftime('%m/%d/%Y', datetime(date_added, 'unixepoch')) as dateAdded, 
+												date_added as dateAddedTime 
+											FROM 
+												companies 
+											WHERE 
+												date_deleted ISNULL
+												AND
+												(name LIKE :like 
+												OR 
+												address LIKE :like 
+												OR 
+												phone LIKE :like 
+												OR 
+												fax LIKE :like 
+												OR 
+												website LIKE :like)
+											<param name="like" id="NRLOrderIt-Company-Like" type="string">%</param>
+										</query>
+										<action>
+											<treechildren flex="1">
+												<treeitem uri="?">
+													<treerow>
+														<treecell label="?name" value="?companies_id" />
+														<treecell label="?address"/>
+														<treecell label="?phone"/>
+														<treecell label="?fax"/>
+														<treecell label="?website"/>
+														<treecell label="?dateAdded" value="?dateAddedTime"/>
+													</treerow>
+												</treeitem>										
+											</treechildren>
+										</action>										
+									</template>
+								</tree>						
+							</hbox>						
+						</vbox>
+					</tabpanel>
+					<tabpanel flex="1">
+						<vbox flex="1">
+							<hbox>
+								<button label="&nrlorderit.new.label;" oncommand="JobOrderNumber.showAddForm();" tooltiptext="&nrlorderit.jobordernumber.new.tooltip;"/>
+								<button label="&nrlorderit.edit.label;" oncommand="JobOrderNumber.showUpdateForm();" tooltiptext="&nrlorderit.jobordernumber.edit.tooltip;"/>
+								<button label="&nrlorderit.delete.label;" oncommand="JobOrderNumber.remove();" tooltiptext="&nrlorderit.jobordernumber.delete.tooltip;"/>
+								<textbox id="NRLOrderIt-JobOrderNumber-Search" type="search" searchbutton="true" oncommand="JobOrderNumber.search();" tooltiptext="&nrlorderit.jobordernumber.search.tooltip;"/>
+								<spacer flex="1"/>
+							</hbox>	
+							<hbox flex="1">
+								<vbox id="NRLOrderIt-JobOrderNumber-Form" hidden="true">
+									<hbox>
+										<label value="&nrlorderit.name.label;:" width="100"/>
+										<textbox id="NRLOrderIt-JobOrderNumber-Form-Name" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.jobordernumber.name.tooltip;"/>
+									</hbox>
+									<hbox>
+										<label value="&nrlorderit.accountnumber.label;:" width="100"/>
+										<textbox id="NRLOrderIt-JobOrderNumber-Form-Number" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.jobordernumber.accountnumber.tooltip;"/>
+									</hbox>
+									<hbox>
+										<label value="&nrlorderit.description.label;:" width="100"/>
+										<textbox id="NRLOrderIt-JobOrderNumber-Form-Description" width="250" multiline="true" tooltiptext="&nrlorderit.jobordernumber.description.tooltip;"/>
+									</hbox>
+									<hbox>
+										<spacer flex="1"/>
+										<button id="NRLOrderIt-JobOrderNumber-Form-Add" label="&nrlorderit.add.label;" oncommand="JobOrderNumber.add();" tooltiptext="&nrlorderit.jobordernumber.add.tooltip;"/>
+										<button id="NRLOrderIt-JobOrderNumber-Form-Update" label="&nrlorderit.update.label;" oncommand="JobOrderNumber.edit();" hidden="true" tooltiptext="&nrlorderit.jobordernumber.edit.tooltip;"/>
+										<button id="NRLOrderIt-JobOrderNumber-Form-Reset" label="&nrlorderit.reset.label;" oncommand="JobOrderNumber.resetForm();" tooltiptext="&nrlorderit.jobordernumber.reset.tooltip;"/>		
+										<button id="NRLOrderIt-JobOrderNumber-Form-Cancel" label="&nrlorderit.cancel.label;" oncommand="JobOrderNumber.cancelForm();" tooltiptext="&nrlorderit.jobordernumber.cancel.tooltip;"/>								
+									</hbox>
+								</vbox>
+								<menupopup id="NRLOrderIt-JobOrderNumber-ContextMenu">
+									<menuitem label="&nrlorderit.edit.label;" oncommand="JobOrderNumber.showUpdateForm();"/>
+									<menuitem label="&nrlorderit.delete.label;" oncommand="JobOrderNumber.remove();"/>
+								</menupopup>			
+								<tree id="NRLOrderIt-JobOrderNumber-Tree" 
+									  seltype="single" 
+									  editable="false" 
+									  datasources="rdf:null"
+									  ref="*" 
+									  querytype="storage"									   
+									  flags="dont-build-content"
+									  flex="1"
+									  ondblclick="JobOrderNumber.showUpdateForm();"
+									  context="NRLOrderIt-JobOrderNumber-ContextMenu">
+									<treecols>
+										<treecol id="NRLOrderIt-JobOrderNumber-Tree-Name" label="&nrlorderit.name.label;" width="200" sort="?name" persist="width ordinal hidden sortActive sortDirection"/>
+										<splitter class="tree-splitter"/>
+										<treecol id="NRLOrderIt-JobOrderNumber-Tree-Number" label="&nrlorderit.accountnumber.label;" width="150" persist="width ordinal hidden"/>
+										<splitter class="tree-splitter"/>
+										<treecol id="NRLOrderIt-JobOrderNumber-Tree-Description" label="&nrlorderit.description.label;" flex="1" sort="?description" persist="width ordinal hidden sortActive sortDirection"/>
+										<splitter class="tree-splitter"/>
+										<treecol id="NRLOrderIt-JobOrderNumber-Tree-DateAdded" label="&nrlorderit.date.label; &nrlorderit.added.label;" width="100" sort="?dateAdded" persist="width ordinal hidden sortActive sortDirection" style="text-align:center;"/>
+										<splitter class="tree-splitter"/>									
+									</treecols>
+													
+									<template>
+										<query>
+											SELECT 
+												job_order_numbers_id, 
+												name, 
+												job_order_number, 
+												description, 
+												strftime('%m/%d/%Y', datetime(date_added, 'unixepoch')) as dateAdded 
+											FROM 
+												job_order_numbers 
+											WHERE 
+												date_deleted ISNULL
+												AND
+												(name LIKE :like
+												OR
+												job_order_number LIKE :like
+												OR
+												description LIKE :like)
+											<param name="like" id="NRLOrderIt-JobOrderNumber-Like" type="string">%</param>
+										</query>
+										<action>
+											<treechildren>
+												<treeitem uri="?">
+													<treerow>
+														<treecell label="?name" value="?job_order_numbers_id"/>
+														<treecell label="?job_order_number"/>
+														<treecell label="?description"/>
+														<treecell label="?dateAdded"/>
+													</treerow>
+												</treeitem>										
+											</treechildren>
+										</action>										
+									</template>									
+								</tree>																															
+							</hbox>																				
+						</vbox>
+					</tabpanel>
+				</tabpanels>
+			</tabbox>
+		</vbox>
+	</vbox>
+
+	<statusbar id="status-bar">
+ 		<statusbarpanel id="NRLOrderIt-status-bar-icon" class="statusbarpanel-iconic" src="chrome://NRLOrderIt/skin/NRL_Seal-16x16.png" onclick="NRLOrderIt.toggleDisplay();" tooltiptext="&nrlorderit.statusbar.tooltip;"/>
+	</statusbar>
+	
+	<menupopup id="menu_ToolsPopup">
+		<menuitem label="&nrlorderit.nrlorderit.label;" insertafter="devToolsSeparator" oncommand="NRLOrderIt.toggleDisplay();" key="NRLOrderIt-Open"/>
+	</menupopup>
+	
+	<keyset id="mainKeyset">
+		<key id="NRLOrderIt-Open" key="N" oncommand="NRLOrderIt.toggleDisplay();" modifiers="accel alt"/>
+	</keyset>
+	
+	<stringbundleset>
+		<stringbundle id="NRLOrderIt-Messages" src="chrome://NRLOrderIt/locale/NRLOrderIt.properties"/>
+	</stringbundleset>	
+</overlay>

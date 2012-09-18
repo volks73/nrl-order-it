@@ -1,0 +1,16 @@
+pref("extensions.nrlorderit.version", "0.0.0");
+pref("extensions.nrlorderit.installed", false);
+perf("extensions.nrlorderit.debug", false);
+perf("extensions.nrlorderit.debug.level", 'ALL');
+pref("extensions.nrlorderit.logging", true);
+perf("extensions.nrlorderit.logging.level", 'WARN');
+perf("extensions.nrlorderit.dateformat", 'M/d/yyyy');
+pref("extensions.nrlorderit.general.showprintdialog", true);
+pref("extensions.nrlorderit.general.signaturedate", true);
+pref("extensions.nrlorderit.general.doubleclicktowebsite", false);
+pref("extensions.nrlorderit.default.originator", "");
+pref("extensions.nrlorderit.default.deliverto", "");
+pref("extensions.nrlorderit.default.priority", "Standard");
+pref("extensions.nrlorderit.default.unitofissue", "Ea.");
+pref("extensions.nrlorderit.default.daterequired", 7);
+pref("extensions.nrlorderit.default.signaturetitle", "");

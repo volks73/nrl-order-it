@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/css" href="chrome://global/skin/" ?>
+<!DOCTYPE overlay SYSTEM "chrome://NRLOrderIt/locale/NRLOrderIt.dtd">
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<hbox id="NRLOrderIt-Toolbar" class="toolbar">
+		<vbox>
+			<spacer flex="1" />
+			<label id="NRLOrderIt-message" 
+				value="&nrlorderit.welcome.label;" />
+			<spacer flex="1" />
+		</vbox>
+		<spacer flex="1" />
+		<toolbarbutton id="NRLOrderIt-Pref" 
+			label="&nrlorderit.preferences.label;"
+			image="chrome://NRLOrderIt/skin/NRLOrderIt_Prefs-16x16.png"
+			oncommand="mil.navy.mil.NRLOrderIt.displayPreferences();" 
+			tooltiptext="&nrlorderit.preferences.tooltip;" />
+		<toolbarspacer width="5" />
+		<toolbarbutton id="NRLOrderIt-FullScreen" 
+			label="&nrlorderit.fullscreen.label;"
+			image="chrome://NRLOrderIt/skin/NRLOrderIt_Fullscreen-16x16.png"
+			oncommand="mil.navy.nrl.NRLOrderIt.BrowserOverlay.toggleFullscreen();" 
+			tooltiptext="&nrlorderit.fullscreen.tooltip;" />
+		<toolbarspacer width="5" />
+		<toolbarbutton id="NRLOrderIt-Close" 
+			label="&nrlorderit.close.label;"
+			image="chrome://NRLOrderIt/skin/NRLOrderIt_Close-16x16.png"
+			oncommand="mil.navy.nrl.NRLOrderIt.BrowserOverlay.togglePane();"
+			tooltiptext="&nrlorderit.close.tooltip;" />
+	</hbox>
+</overlay>
