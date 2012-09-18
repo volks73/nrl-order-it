@@ -54,7 +54,6 @@ var Company = new function()
 	this.remove = remove;	
 	this.search = search;
 	this.gotoWebsite = gotoWebsite;
-	this.currentPage = currentPage;
 	this.showAddForm = showAddForm;
 	this.showUpdateForm = showUpdateForm;
 	this.resetForm = resetForm;
@@ -207,7 +206,7 @@ var Company = new function()
 			}
 		}
 		
-		if ( companyWebsite.substring(0, 7) != HTTP )
+		if ( companyWebsite.substring(0, 6) != HTTP )
 		{
 			companyWebsite = HTTP + companyWebsite;
 		}
@@ -275,15 +274,6 @@ var Company = new function()
 			
 			NRLOrderIt.updateMessage('company.edit');
 		}
-	}
-	
-	/**
-	 * Sets the company home page to the web page in the currently active tab.
-	 */
-	function currentPage()
-	{
-		var formWebsite = document.getElementById('NRLOrderIt-Company-Form-Website');
-		formWebsite.value = gBrowser.contentDocument.location;
 	}
 	
 	/**
