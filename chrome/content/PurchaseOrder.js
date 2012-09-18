@@ -584,15 +584,7 @@ var PurchaseOrder = new function()
 		
 		getFormItem();
 		
-		if( item.hazmatCode <= 0 )
-		{
-			NRLOrderIt.displayMessage('item.hazmatCode');
-		}
-		else if ( item.unitPrice <= 0.0 )
-		{
-			NRLOrderIt.displayMessage('item.unitPrice');
-		}
-		else
+		if ( item.hazmatCode > 0 )
 		{
 			insertItem();		
 			resetItemForm();		
@@ -600,6 +592,10 @@ var PurchaseOrder = new function()
 			updateItemSummary();
 			
 			NRLOrderIt.updateMessage("item.add");
+		}
+		else
+		{
+			NRLOrderIt.displayMessage('item.hazmatCode');
 		}		
 	}
 	
@@ -1195,7 +1191,6 @@ var PurchaseOrder = new function()
 		var index = 1;
 		var htmlItems = htmlDocument.getElementById('htmlItems');
 		htmlDocument.getElementById('htmlItemsHeader');
-		
 		/*
 		 * Clear all previous items. This fixes a bug were on successive prints, items keep
 		 * getting appended to the end of the purchase order. In other words, the items
@@ -1265,19 +1260,9 @@ var PurchaseOrder = new function()
 		/*
 		 * Add blank rows to the end of the form.
 		 */
-		var htmlItemsHeight = htmlItems.offsetHeight;
-		
-		/*
-		 * 450 is the maximum height in pixels for listing items on one page.
-		 */
-		var remainingSpace = 450 - htmlItemsHeight;
-		
-		/*
-		 * 31 is the row height for an empty or one row.
-		 */
-		var rowHeight = 31;
-		
-		while ( remainingSpace >= rowHeight )
+		var remainingRows = 14 - index;
+			
+		while ( remainingRows >= 0 )
 		{
 			var itemRow = htmlDocument.createElement('tr');
 			itemRow.appendChild(htmlDocument.createElement('td'));
@@ -1293,7 +1278,7 @@ var PurchaseOrder = new function()
 			
 			htmlItems.appendChild(itemRow);
 			
-			remainingSpace = remainingSpace - rowHeight;
+			remainingRows--;
 		}
 	}
 }

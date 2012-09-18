@@ -450,9 +450,9 @@
 													hazmat_codes.description as hazmatCodesDescription, 
 													items.hazmat_codes_id as hazmatCodesId, 
 													unit_of_issue, 
-													CAST(unit_price AS INT) || '.' || substr(unit_price * 10, -2, -1) || substr(unit_price * 100, -2, -1) AS unitPrice, 
+													CAST(unit_price AS INT) || '.' || substr(ROUND(unit_price * 100), -2, -2) AS unitPrice, 
 													quantity,
-													CAST(unit_price * quantity AS INT) || '.' || substr(unit_price * quantity * 10, -2, -1) || substr(unit_price * quantity * 100, -2, -1) AS totalCost,														
+													CAST(unit_price * quantity AS INT) || '.' || substr(ROUND(unit_price * quantity * 100), -2, -2) AS totalCost,														
 													strftime('%m/%d/%Y', datetime(date_added, 'unixepoch')) as dateAdded, 
 													date_added as dateAddedTime 
 												FROM 
