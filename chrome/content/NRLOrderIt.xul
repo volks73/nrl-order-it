@@ -46,7 +46,7 @@
 
 	<vbox id="appcontent">
 		<splitter id="NRLOrderIt-splitter" resizebefore="closest" resizeafter="closest" hidden="true"/>
-		<vbox id="NRLOrderIt-pane" hidden="true" height="300" persist="height" flex="0">
+		<vbox id="NRLOrderIt-pane" hidden="true" height="300" persist="height">
 			<hbox id="NRLOrderIt-toolbar" class="toolbar">
 				<vbox>
 					<spacer flex="1"/>
@@ -54,11 +54,8 @@
 					<spacer flex="1"/>
 				</vbox>				
 				<spacer flex="1"/>
-				<toolbarbutton id="NRLOrderIt-Pref" label="&nrlorderit.preferences.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Prefs-16x16.png" oncommand="NRLOrderIt.displayPreferences();" tooltiptext="&nrlorderit.preferences.tooltip;"/>
-				<toolbarspacer width="5"/>
-				<toolbarbutton id="NRLOrderIt-FullScreen" label="&nrlorderit.fullscreen.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Fullscreen-16x16.png" oncommand="NRLOrderIt.toggleFullscreen();" tooltiptext="&nrlorderit.fullscreen.tooltip;"/>
-				<toolbarspacer width="5"/>
-				<toolbarbutton id="NRLOrderIt-Close" label="&nrlorderit.close.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Close-16x16.png" oncommand="NRLOrderIt.toggleDisplay();" tooltiptext="&nrlorderit.close.tooltip;"/>
+				<button id="NRLOrderIt-Pref" label="&nrlorderit.preferences.label;" oncommand="NRLOrderIt.displayPreferences();" tooltiptext="&nrlorderit.preferences.tooltip;"/>
+				<button id="NRLOrderIt-Close" label="&nrlorderit.close.label;" oncommand="NRLOrderIt.toggleDisplay();" tooltiptext="&nrlorderit.close.tooltip;"/>
 			</hbox>
 			<tabbox flex="1">
 				<tabs>
@@ -70,32 +67,19 @@
 					<tabpanel flex="1">
 						<vbox flex="1" id="NRLOrderIt-PurchaseOrders" hidden="false">
 							<hbox>
-								<toolbarbutton label="&nrlorderit.new.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Add-16x16.png" oncommand="PurchaseOrder.add();" tooltiptext="&nrlorderit.purchaseorder.new.tooltip;"/>
-								<toolbarspacer width="5"/>
-								<toolbarbutton label="&nrlorderit.edit.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Edit-16x16.png" oncommand="PurchaseOrder.edit();" tooltiptext="&nrlorderit.purchaseorder.edit.tooltip;"/>
-								<toolbarspacer width="5"/>
-								<toolbarbutton label="&nrlorderit.view.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_View-16x16.png"  oncommand="PurchaseOrder.view();" tooltiptext="&nrlorderit.purchaseorder.view.tooltip;"/>
-								<toolbarspacer width="5"/>
-								<toolbarbutton label="&nrlorderit.print.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Print-16x16.png"  oncommand="PurchaseOrder.print();" tooltiptext="&nrlorderit.purchaseorder.print.tooltip;"/>
-								<toolbarspacer width="5"/>
-								<toolbarbutton label="&nrlorderit.copy.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Copy-16x16.png"  oncommand="PurchaseOrder.copy();" tooltiptext="&nrlorderit.purchaseorder.copy.tooltip;"/>
-								<toolbarspacer width="5"/>								
-								<toolbarbutton label="&nrlorderit.delete.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Delete-16x16.png"  oncommand="PurchaseOrder.remove();" tooltiptext="&nrlorderit.purchaseorder.delete.tooltip;"/>
-								<toolbarspacer width="5"/>								
+								<button label="&nrlorderit.new.label;" oncommand="PurchaseOrder.add();" tooltiptext="&nrlorderit.purchaseorder.new.tooltip;"/>
+								<button label="&nrlorderit.edit.label;" oncommand="PurchaseOrder.edit();" tooltiptext="&nrlorderit.purchaseorder.edit.tooltip;"/>
+								<button label="&nrlorderit.generate.label;" oncommand="PurchaseOrder.generate();" tooltiptext="&nrlorderit.purchaseorder.generate.tooltip;"/>
+								<button label="&nrlorderit.copy.label;" oncommand="PurchaseOrder.copy();" tooltiptext="&nrlorderit.purchaseorder.copy.tooltip;"/>								
+								<button label="&nrlorderit.delete.label;" oncommand="PurchaseOrder.remove();" tooltiptext="&nrlorderit.purchaseorder.delete.tooltip;"/>								
 								<textbox id="NRLOrderIt-PurchaseOrder-Search" type="search" searchbutton="true" oncommand="PurchaseOrder.search();" tooltiptext="&nrlorderit.purchaseorder.search.tooltip;"/>
 								<spacer flex="1"/>
 							</hbox>
-							<spacer height="5"/>
 							<menupopup id="NRLOrderIt-PurchaseOrder-ContextMenu">
-								<menuitem label="&nrlorderit.edit.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Edit-16x16.png" oncommand="PurchaseOrder.edit();"/>
-								<menuitem label="&nrlorderit.view.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_View-16x16.png" oncommand="PurchaseOrder.view();"/>
-								<menuitem label="&nrlorderit.print.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Print-16x16.png" oncommand="PurchaseOrder.print();"/>
-								<menuitem label="&nrlorderit.copy.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Copy-16x16.png" oncommand="PurchaseOrder.copy();"/>
-								<menuseparator/>
-								<menuitem label="&nrlorderit.delete.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Delete-16x16.png" oncommand="PurchaseOrder.remove();"/>
-								<menuseparator/>
-								<menuitem label="&nrlorderit.submit.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Submit-16x16.png" oncommand="PurchaseOrder.submit();"/>
-								<menuitem label="&nrlorderit.receive.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Receive-16x16.png" oncommand="PurchaseOrder.receive();"/>
+								<menuitem label="&nrlorderit.edit.label;" oncommand="PurchaseOrder.edit();"/>
+								<menuitem label="&nrlorderit.generate.label;" oncommand="PurchaseOrder.generate();"/>
+								<menuitem label="&nrlorderit.copy.label;" oncommand="PurchaseOrder.copy();"/>
+								<menuitem label="&nrlorderit.delete.label;" oncommand="PurchaseOrder.remove();"/>
 							</menupopup>
 							<tree id="NRLOrderIt-PurchaseOrder-Tree" 
 								  seltype="single" 
@@ -219,39 +203,27 @@
 							<hbox flex="1">
 								<vbox>									
 									<hbox>
-										<vbox pack="center">
-											<label value="&nrlorderit.title.label;:" width="100"/>
-										</vbox>										
+										<label value="&nrlorderit.title.label;:" width="100"/>
 										<textbox id="NRLOrderIt-PurchaseOrder-Form-Title" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.purchaseorder.title.tooltip;"/>
 									</hbox>
 									<hbox>
-										<vbox pack="center">
-											<label value="&nrlorderit.originator.label;:" width="100"/>
-										</vbox>
+										<label value="&nrlorderit.originator.label;:" width="100"/>
 										<textbox id="NRLOrderIt-PurchaseOrder-Form-Originator" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.purchaseorder.originator.tooltip;"/>
 									</hbox>
 									<hbox>
-										<vbox pack="center">
-											<label value="&nrlorderit.deliverto.label;:" width="100"/>
-										</vbox>
+										<label value="&nrlorderit.deliverto.label;:" width="100"/>
 										<textbox id="NRLOrderIt-PurchaseOrder-Form-DeliverTo" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.purchaseorder.deliverto.tooltip;"/>
 									</hbox>
 									<hbox>
-										<vbox pack="center">
-											<label value="&nrlorderit.priority.label;:" width="100"/>
-										</vbox>
+										<label value="&nrlorderit.priority.label;:" width="100"/>
 										<textbox id="NRLOrderIt-PurchaseOrder-Form-Priority" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.purchaseorder.priority.tooltip;"/>
 									</hbox>
 									<hbox>
-										<vbox pack="center">
-											<label value="&nrlorderit.date.label; &nrlorderit.required.label;:" width="100"/>
-										</vbox>
+										<label value="&nrlorderit.date.label; &nrlorderit.required.label;:" width="100"/>
 										<datepicker id="NRLOrderIt-PurchaseOrder-Form-DateRequired" type="popup" tooltiptext="&nrlorderit.purchaseorder.daterequired.tooltip;"/>
 									</hbox>
 									<hbox>
-										<vbox pack="center">
-											<label value="&nrlorderit.jobordernumber.label;:" width="100"/>
-										</vbox>
+										<label value="&nrlorderit.jobordernumber.label;:" width="100"/>
 										<menulist id="NRLOrderIt-PurchaseOrder-Form-JobOrderNumber" 
 												  datasources="rdf:null" 
 												  ref="*" 
@@ -270,10 +242,7 @@
 													FROM 
 														job_order_numbers 
 													WHERE 
-														date_deleted IS NULL
-													OR
-														job_order_numbers_id = :jobOrderNumberId
-													<param name="jobOrderNumberId" id="NRLOrderIt-PurchaseOrder-Form-JobOrderNumberId" type="integer">-1</param>
+														date_deleted ISNULL
 												</query>
 												<rule>
 													<action>
@@ -287,9 +256,7 @@
 										</menulist>
 									</hbox>
 									<hbox>
-										<vbox pack="center">
-											<label value="&nrlorderit.company.label;:" width="100"/>
-										</vbox>
+										<label value="&nrlorderit.company.label;:" width="100"/>
 										<menulist id="NRLOrderIt-PurchaseOrder-Form-Company" 
 												  datasources="rdf:null" 
 												  ref="*" 
@@ -304,14 +271,11 @@
 												<query>
 													SELECT 
 														companies_id, 
-														name														 
+														name 
 													FROM 
-														companies
-													WHERE
-														date_deleted IS NULL
-													OR
-														companies_id = :companyId;									
-													<param name="companyId" id="NRLOrderIt-PurchaseOrder-Form-CompanyId" type="integer">-1</param>
+														companies 
+													WHERE 
+														date_deleted ISNULL
 												</query>
 												<action>
 													<menupopup>
@@ -323,22 +287,30 @@
 										</menulist>
 									</hbox>
 									<hbox>
-										<vbox pack="center">
+										<vbox>
+											<spacer flex="1"/>
 											<label value="&nrlorderit.submitted.label;:" width="100"/>
+											<spacer flex="1"/>
 										</vbox>
 										<checkbox id="NRLOrderIt-PurchaseOrder-Form-Submitted" label="Yes" checked="false" tooltiptext="&nrlorderit.purchaseorder.submitted.tooltip;"/>
-										<vbox pack="center">
+										<vbox>
+											<spacer flex="1"/>
 											<label value="&nrlorderit.on.label;:"/>
+											<spacer flex="1"/>
 										</vbox>										
 										<datepicker id="NRLOrderIt-PurchaseOrder-Form-DateSubmitted" type="popup" tooltiptext="&nrlorderit.purchaseorder.submitteddate.tooltip;"/>							
 									</hbox>
 									<hbox>
-										<vbox pack="center">
+										<vbox>
+											<spacer flex="1"/>
 											<label value="&nrlorderit.received.label;:" width="100"/>
+											<spacer flex="1"/>
 										</vbox>
 										<checkbox id="NRLOrderIt-PurchaseOrder-Form-Received" label="Yes" checked="false" tooltiptext="&nrlorderit.purchaseorder.received.tooltip;"/>																				
-										<vbox pack="center">
+										<vbox>
+											<spacer flex="1"/>
 											<label value="&nrlorderit.on.label;:"/>
+											<spacer flex="1"/>
 										</vbox>																		
 										<datepicker id="NRLOrderIt-PurchaseOrder-Form-DateReceived" type="popup" tooltiptext="&nrlorderit.purchaseorder.receiveddate.tooltip;"/>
 									</hbox>									
@@ -348,228 +320,208 @@
 									</hbox>																					
 								</vbox>											
 								<vbox flex="1">
-									<hbox>														
-										<vbox>
-											<label value="&nrlorderit.partnumber.label;:"/>
-											<textbox id="NRLOrderIt-Item-Form-PartNumber" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.item.partnumber.tooltip;"/>
-										</vbox>
-										<vbox flex="2">
-											<label value="&nrlorderit.description.label;:"/>
-											<textbox id="NRLOrderIt-Item-Form-Description" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.item.description.tooltip;"/>
-										</vbox>
-										<vbox width="150">
-											<label value="&nrlorderit.hazmatcode.label;:" style="text-align:center;"/>
-											<menulist id="NRLOrderIt-Item-Form-HazmatCode" 
-													  datasources="rdf:null" 
-													  ref="*" 
-													  querytype="storage"
-													  crop="end" 
-													  editable="false" 
-													  onkeypress="NRLOrderIt.advanceFocus(event);"
-													  tooltiptext="&nrlorderit.item.hazmatcode.tooltip;"
-													  sort="?letter"
-													  sortDirection="ascending">
-												<template>
-													<query>
-														SELECT 
-															hazmat_codes_id, 
-															letter, 
-															description 
-														FROM 
-															hazmat_codes
-													</query>
-													<action>
-														<menupopup>
-															<menuitem label="&nrlorderit.selectcode.label;" value="-1" disabled="true"/>
-															<menuitem uri="?" label="?letter - ?description" value="?hazmat_codes_id" style="max-width:none;" crop="none"/>
-														</menupopup>																	
-													</action>																																
-												</template>																
-											</menulist>
-										</vbox>
-										<vbox width="75">
-											<label value="&nrlorderit.unitofissue.label;:"/>
-											<textbox id="NRLOrderIt-Item-Form-UnitOfIssue" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.item.unitofissue.tooltip;"/>
-										</vbox>
-										<vbox width="50">
-											<label value="&nrlorderit.quantity.label;:" style="text-align:center;"/>
-											<textbox id="NRLOrderIt-Item-Form-Quantity" type="number" hidespinbuttons="false" min="1" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.item.quantity.tooltip;"/>
-										</vbox>
-										<vbox width="75">
-											<label value="&nrlorderit.unitprice.label; &nrlorderit.currency.symbol;:"/>
-											<textbox id="NRLOrderIt-Item-Form-UnitPrice" type="number" decimalplaces="2" hidespinbuttons="false" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.item.unitprice.tooltip;"/>
-										</vbox>														
-										<vbox>
+										<hbox>														
+											<vbox>
+												<label value="&nrlorderit.partnumber.label;:"/>
+												<textbox id="NRLOrderIt-Item-Form-PartNumber" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.item.partnumber.tooltip;"/>
+											</vbox>
+											<vbox flex="2">
+												<label value="&nrlorderit.description.label;:"/>
+												<textbox id="NRLOrderIt-Item-Form-Description" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.item.description.tooltip;"/>
+											</vbox>
+											<vbox width="150">
+												<label value="&nrlorderit.hazmatcode.label;:" style="text-align:center;"/>
+												<menulist id="NRLOrderIt-Item-Form-HazmatCode" 
+														  datasources="rdf:null" 
+														  ref="*" 
+														  querytype="storage"
+														  crop="end" 
+														  editable="false" 
+														  onkeypress="NRLOrderIt.advanceFocus(event);"
+														  tooltiptext="&nrlorderit.item.hazmatcode.tooltip;"
+														  sort="?letter"
+														  sortDirection="ascending">
+													<template>
+														<query>
+															SELECT 
+																hazmat_codes_id, 
+																letter, 
+																description 
+															FROM 
+																hazmat_codes
+														</query>
+														<action>
+															<menupopup>
+																<menuitem label="&nrlorderit.selectcode.label;" value="-1" disabled="true"/>
+																<menuitem uri="?" label="?letter - ?description" value="?hazmat_codes_id" style="max-width:none;" crop="none"/>
+															</menupopup>																	
+														</action>																																
+													</template>																
+												</menulist>
+											</vbox>
+											<vbox width="75">
+												<label value="&nrlorderit.unitofissue.label;:"/>
+												<textbox id="NRLOrderIt-Item-Form-UnitOfIssue" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.item.unitofissue.tooltip;"/>
+											</vbox>
+											<vbox width="50">
+												<label value="&nrlorderit.quantity.label;:" style="text-align:center;"/>
+												<textbox id="NRLOrderIt-Item-Form-Quantity" type="number" hidespinbuttons="false" min="1" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.item.quantity.tooltip;"/>
+											</vbox>
+											<vbox width="75">
+												<label value="&nrlorderit.unitprice.label; &nrlorderit.currency.symbol;:"/>
+												<textbox id="NRLOrderIt-Item-Form-UnitPrice" type="number" decimalplaces="2" hidespinbuttons="false" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.item.unitprice.tooltip;"/>
+											</vbox>														
+											<vbox>
+												<spacer flex="1"/>
+												<button id="NRLOrderIt-Item-Form-Add" label="&nrlorderit.add.label;" oncommand="PurchaseOrder.addItem();" tooltiptext="&nrlorderit.item.add.tooltip;"/>
+												<button id="NRLOrderIt-Item-Form-Update" label="&nrlorderit.update.label;" oncommand="PurchaseOrder.updateItem();" hidden="true" tooltiptext="&nrlorderit.item.update.tooltip;"/>
+											</vbox>																									
+										</hbox>
+										<separator class="groove"/>
+										<menupopup id="NRLOrderIt-Item-ContextMenu">
+											<menuitem label="&nrlorderit.edit.label;" oncommand="PurchaseOrder.editItem();"/>
+											<menuitem label="&nrlorderit.delete.label;" oncommand="PurchaseOrder.removeItem();"/>
+										</menupopup>													
+										<tree id="NRLOrderIt-Item-Tree"  
+									  		  seltype="single" 
+									  		  editable="false" 
+									  		  datasources="rdf:null"
+									  		  ref="*" 
+									  		  querytype="storage"									   
+									  		  flags="dont-build-content"
+									  		  enableColumnDrag="true"
+									  		  flex="2"
+									  		  ondblclick="PurchaseOrder.editItem();"
+									  		  context="NRLOrderIt-Item-ContextMenu">
+											<treecols> 
+												<treecol id="NRLOrderIt-Item-Tree-PartNumber" label="&nrlorderit.partnumber.label;" width="150" sort="?part_number" persist="width ordinal hidden sortActive sortDirection"/>
+												<splitter class="tree-splitter"/>
+												<treecol id="NRLOrderIt-Item-Tree-Description" label="&nrlorderit.description.label;" flex="1" persist="width ordinal hidden"/>
+												<splitter class="tree-splitter"/>
+												<treecol id="NRLOrderIt-Item-Tree-HazmatCode" label="&nrlorderit.hazmatcode.label;" width="150" style="text-align:center;" persist="width ordinal hidden"/>
+												<splitter class="tree-splitter"/>						
+												<treecol id="NRLOrderIt-Item-Tree-UnitOfIssue" label="&nrlorderit.unitofissue.label;" width="75" style="text-align:center;" persist="width ordinal hidden"/>
+												<splitter class="tree-splitter"/>
+												<treecol id="NRLOrderIt-Item-Tree-Quantity" label="&nrlorderit.quantity.label;" width="50" type="text" sort="?quantity" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
+												<splitter class="tree-splitter"/>
+												<treecol id="NRLOrderIt-Item-Tree-UnitPrice" label="&nrlorderit.unitprice.label; &nrlorderit.currency.symbol;" width="75" sort="?unit_price" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
+												<splitter class="tree-splitter"/>
+												<treecol id="NRLOrderIt-Item-Tree-TotalCost" label="&nrlorderit.total.label; &nrlorderit.cost.label; &nrlorderit.currency.symbol;" width="75" sort="?totalCost" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
+												<splitter class="tree-splitter"/>
+												<treecol id="NRLOrderIt-Item-Tree-DateAdded" label="&nrlorderit.date.label; &nrlorderit.added.label;" width="75" sort="?dateAddedTime" style="text-align:center;" hidden="true" persist="width ordinal hidden sortActive sortDirection"/>
+												<splitter class="tree-splitter"/>
+											</treecols>
+											<template>
+												<query>
+													SELECT 
+														items_id, 
+														part_number, 
+														items.description as description, 
+														letter, 
+														hazmat_codes.description as hazmatCodesDescription, 
+														items.hazmat_codes_id as hazmatCodesId, 
+														unit_of_issue, 
+														CAST(unit_price AS INT) || '.' || substr(ROUND(unit_price * 100), -2, -2) AS unitPrice, 
+														quantity,
+														CAST(unit_price * quantity AS INT) || '.' || substr(ROUND(unit_price * quantity * 100), -2, -2) AS totalCost,														
+														strftime('%m/%d/%Y', datetime(date_added, 'unixepoch')) as dateAdded, 
+														date_added as dateAddedTime 
+													FROM 
+														items, 
+														hazmat_codes 
+													WHERE 
+														items.hazmat_codes_id = hazmat_codes.hazmat_codes_id 
+													AND 
+														purchase_orders_id = :purchaseOrdersId
+													<param id="purchaseOrdersId" name="purchaseOrdersId" type="integer">0</param> 
+												</query>
+												<action>
+													<treechildren flex="1">
+														<treeitem uri="?">
+															<treerow>
+																<treecell label="?part_number" value="?items_id" />
+																<treecell label="?description"/>
+																<treecell label="?letter - ?hazmatCodesDescription" value="?hazmatCodesId"/>
+																<treecell label="?unit_of_issue"/>
+																<treecell label="?quantity"/>
+																<treecell label="?unitPrice"/>
+																<treecell label="?totalCost"/>
+																<treecell label="?dateAdded" value="?dateAddedTime"/>
+															</treerow>
+														</treeitem>										
+													</treechildren>
+												</action>										
+											</template>
+										</tree>													
+										<hbox>
+											<button label="&nrlorderit.edit.label;" oncommand="PurchaseOrder.editItem();" tooltiptext="&nrlorderit.item.edit.tooltip;"/>
+											<button label="&nrlorderit.remove.label;" oncommand="PurchaseOrder.removeItem();" tooltiptext="&nrlorderit.item.remove.tooltip;"/>
+											<button label="&nrlorderit.removeall.label;" oncommand="PurchaseOrder.removeAllItems();" tooltiptext="&nrlorderit.item.removeall.tooltip;"/>
 											<spacer flex="1"/>
-											<button id="NRLOrderIt-Item-Form-Add" label="&nrlorderit.add.label;" oncommand="PurchaseOrder.addItem();" tooltiptext="&nrlorderit.item.add.tooltip;"/>
-											<button id="NRLOrderIt-Item-Form-Update" label="&nrlorderit.update.label;" oncommand="PurchaseOrder.updateItem();" hidden="true" tooltiptext="&nrlorderit.item.update.tooltip;"/>
-										</vbox>																									
-									</hbox>
-									<separator class="groove"/>
-									<menupopup id="NRLOrderIt-Item-ContextMenu">
-										<menuitem label="&nrlorderit.edit.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Edit-16x16.png" oncommand="PurchaseOrder.editItem();"/>
-										<menuseparator/>
-										<menuitem label="&nrlorderit.delete.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Delete-16x16.png" oncommand="PurchaseOrder.removeItem();"/>
-									</menupopup>													
-									<tree id="NRLOrderIt-Item-Tree"  
-									  	  seltype="single" 
-									  	  editable="false" 
-									  	  datasources="rdf:null"
-									  	  ref="*" 
-									  	  querytype="storage"									   
-									  	  flags="dont-build-content"
-									  	  enableColumnDrag="true"
-									  	  flex="2"
-									  	  ondblclick="PurchaseOrder.editItem();"
-									  	  context="NRLOrderIt-Item-ContextMenu">
-										<treecols> 
-											<treecol id="NRLOrderIt-Item-Tree-PartNumber" label="&nrlorderit.partnumber.label;" width="150" sort="?part_number" persist="width ordinal hidden sortActive sortDirection"/>
-											<splitter class="tree-splitter"/>
-											<treecol id="NRLOrderIt-Item-Tree-Description" label="&nrlorderit.description.label;" flex="1" persist="width ordinal hidden"/>
-											<splitter class="tree-splitter"/>
-											<treecol id="NRLOrderIt-Item-Tree-HazmatCode" label="&nrlorderit.hazmatcode.label;" width="150" style="text-align:center;" persist="width ordinal hidden"/>
-											<splitter class="tree-splitter"/>						
-											<treecol id="NRLOrderIt-Item-Tree-UnitOfIssue" label="&nrlorderit.unitofissue.label;" width="75" style="text-align:center;" persist="width ordinal hidden"/>
-											<splitter class="tree-splitter"/>
-											<treecol id="NRLOrderIt-Item-Tree-Quantity" label="&nrlorderit.quantity.label;" width="50" type="text" sort="?quantity" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
-											<splitter class="tree-splitter"/>
-											<treecol id="NRLOrderIt-Item-Tree-UnitPrice" label="&nrlorderit.unitprice.label; &nrlorderit.currency.symbol;" width="75" sort="?unit_price" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
-											<splitter class="tree-splitter"/>
-											<treecol id="NRLOrderIt-Item-Tree-TotalCost" label="&nrlorderit.total.label; &nrlorderit.cost.label; &nrlorderit.currency.symbol;" width="75" sort="?totalCost" style="text-align:center;" persist="width ordinal hidden sortActive sortDirection"/>
-											<splitter class="tree-splitter"/>
-											<treecol id="NRLOrderIt-Item-Tree-DateAdded" label="&nrlorderit.date.label; &nrlorderit.added.label;" width="75" sort="?dateAddedTime" style="text-align:center;" hidden="true" persist="width ordinal hidden sortActive sortDirection"/>
-											<splitter class="tree-splitter"/>
-										</treecols>
-										<template>
-											<query>
-												SELECT 
-													items_id, 
-													part_number, 
-													items.description as description, 
-													letter, 
-													hazmat_codes.description as hazmatCodesDescription, 
-													items.hazmat_codes_id as hazmatCodesId, 
-													unit_of_issue, 
-													CAST(unit_price AS INT) || '.' || substr(unit_price * 10, -2, -1) || substr(unit_price * 100, -2, -1) AS unitPrice, 
-													quantity,
-													CAST(unit_price * quantity AS INT) || '.' || substr(unit_price * quantity * 10, -2, -1) || substr(unit_price * quantity * 100, -2, -1) AS totalCost,														
-													strftime('%m/%d/%Y', datetime(date_added, 'unixepoch')) as dateAdded, 
-													date_added as dateAddedTime 
-												FROM 
-													items, 
-													hazmat_codes 
-												WHERE 
-													items.hazmat_codes_id = hazmat_codes.hazmat_codes_id 
-												AND 
-													purchase_orders_id = :purchaseOrdersId
-												<param id="purchaseOrdersId" name="purchaseOrdersId" type="integer">0</param> 
-											</query>
-											<action>
-												<treechildren flex="1">
-													<treeitem uri="?">
-														<treerow>
-															<treecell label="?part_number" value="?items_id" />
-															<treecell label="?description"/>
-															<treecell label="?letter - ?hazmatCodesDescription" value="?hazmatCodesId"/>
-															<treecell label="?unit_of_issue"/>
-															<treecell label="?quantity"/>
-															<treecell label="?unitPrice"/>
-															<treecell label="?totalCost"/>
-															<treecell label="?dateAdded" value="?dateAddedTime"/>
-														</treerow>
-													</treeitem>										
-												</treechildren>
-											</action>										
-										</template>
-									</tree>	
-									<spacer height="5"/>												
-									<hbox>
-										<toolbarbutton label="&nrlorderit.edit.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Edit-16x16.png" oncommand="PurchaseOrder.editItem();" tooltiptext="&nrlorderit.item.edit.tooltip;"/>
-										<toolbarspacer width="5"/>
-										<toolbarbutton label="&nrlorderit.remove.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Delete-16x16.png"  oncommand="PurchaseOrder.removeItem();" tooltiptext="&nrlorderit.item.remove.tooltip;"/>
-										<toolbarspacer width="5"/>
-										<toolbarbutton label="&nrlorderit.removeall.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_DeleteAll-16x16.png"  oncommand="PurchaseOrder.removeAllItems();" tooltiptext="&nrlorderit.item.removeall.tooltip;"/>
-										<spacer flex="1"/>
-										<vbox>
+											<vbox>
+												<spacer flex="1"/>
+												<hbox>
+													<label value="&nrlorderit.uniqueitems.label;:"/>
+													<label id="NRLOrderIt-Item-UniqueQuantity" value="0"/>
+													<label value="&nrlorderit.totalitems.label;:"/>
+													<label id="NRLOrderIt-Item-TotalQuantity" value="0"/>
+													<label value="&nrlorderit.total.label;: &nrlorderit.currency.symbol;"/>
+													<label id="NRLOrderIt-Item-Total" value="0"/>	
+												</hbox>
+											</vbox>														
+										</hbox>
+										<hbox>
 											<spacer flex="1"/>
-											<hbox>
-												<label value="&nrlorderit.uniqueitems.label;:"/>
-												<label id="NRLOrderIt-Item-UniqueQuantity" value="0"/>
-												<label value="&nrlorderit.totalitems.label;:"/>
-												<label id="NRLOrderIt-Item-TotalQuantity" value="0"/>
-												<label value="&nrlorderit.total.label;: &nrlorderit.currency.symbol;"/>
-												<label id="NRLOrderIt-Item-Total" value="0"/>	
-											</hbox>
-										</vbox>														
-									</hbox>
-									<spacer height="10"/>
-									<hbox>
-										<spacer flex="1"/>
-										<button id="NRLOrderIt-PurchaseOrder-Form-Done" label="&nrlorderit.done.label;" oncommand="PurchaseOrder.done();" tooltiptext="&nrlorderit.purchaseorder.done.tooltip;"/>
-										<button id="NRLOrderIt-PurchaseOrder-Form-Reset" label="&nrlorderit.reset.label;" oncommand="PurchaseOrder.reset();" tooltiptext="&nrlorderit.purchaseorder.reset.tooltip;"/>
-										<button id="NRLOrderIt-PurchaseOrder-Form-Cancel" label="&nrlorderit.cancel.label;" oncommand="PurchaseOrder.cancel();" tooltiptext="&nrlorderit.purchaseorder.cancel.tooltip;"/>
-									</hbox>
-								</vbox>
+											<button id="NRLOrderIt-PurchaseOrder-Form-Done" label="&nrlorderit.done.label;" oncommand="PurchaseOrder.done();" tooltiptext="&nrlorderit.purchaseorder.done.tooltip;"/>
+											<button id="NRLOrderIt-PurchaseOrder-Form-Reset" label="&nrlorderit.reset.label;" oncommand="PurchaseOrder.reset();" tooltiptext="&nrlorderit.purchaseorder.reset.tooltip;"/>
+											<button id="NRLOrderIt-PurchaseOrder-Form-Cancel" label="&nrlorderit.cancel.label;" oncommand="PurchaseOrder.cancel();" tooltiptext="&nrlorderit.purchaseorder.cancel.tooltip;"/>
+										</hbox>
+									</vbox>
 							</hbox>															
 						</vbox>
 					</tabpanel>
 					<tabpanel flex="1">
 						<vbox flex="1">
 							<hbox>
-								<toolbarbutton label="&nrlorderit.new.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Add-16x16.png" oncommand="Company.showAddForm();" tooltiptext="&nrlorderit.company.new.tooltip;"/>
-								<toolbarspacer width="5"/>
-								<toolbarbutton label="&nrlorderit.edit.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Edit-16x16.png" oncommand="Company.showUpdateForm();" tooltiptext="&nrlorderit.company.edit.tooltip;"/>
-								<toolbarspacer width="5"/>
-								<toolbarbutton label="&nrlorderit.delete.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Delete-16x16.png" oncommand="Company.remove();" tooltiptext="&nrlorderit.company.delete.tooltip;"/>
-								<toolbarspacer width="5"/>
+								<button label="&nrlorderit.new.label;" oncommand="Company.showAddForm();" tooltiptext="&nrlorderit.company.new.tooltip;"/>
+								<button label="&nrlorderit.edit.label;" oncommand="Company.showUpdateForm();" tooltiptext="&nrlorderit.company.edit.tooltip;"/>
+								<button label="&nrlorderit.delete.label;" oncommand="Company.remove();" tooltiptext="&nrlorderit.company.delete.tooltip;"/>
 								<textbox id="NRLOrderIt-Company-Search" type="search" searchbutton="true" oncommand="Company.search();" tooltiptext="&nrlorderit.company.search.tooltip;"/>
 								<spacer flex="1"/>
 							</hbox>	
-							<spacer height="5"/>
 							<hbox flex="1">							
 								<vbox id="NRLOrderIt-Company-Form" hidden="true">
 									<hbox>
-										<vbox pack="center">
-											<label value="&nrlorderit.name.label;:" width="100"/>
-										</vbox>																					
+										<label value="&nrlorderit.name.label;:" width="100"/>
 										<textbox id="NRLOrderIt-Company-Form-Name" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.company.name.tooltip;"/>
 									</hbox>
 									<hbox>
-										<label value="&nrlorderit.address.label;:" width="100"/>										
+										<label value="&nrlorderit.address.label;:" width="100"/>
 										<textbox id="NRLOrderIt-Company-Form-Address" width="250" multiline="true" tooltiptext="&nrlorderit.company.address.tooltip;"/>
 									</hbox>
 									<hbox>
-										<vbox pack="center">
-											<label value="&nrlorderit.phone.label;:" width="100"/>
-										</vbox>
+										<label value="&nrlorderit.phone.label;:" width="100"/>
 										<textbox id="NRLOrderIt-Company-Form-Phone" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.company.phone.tooltip;"/>
 									</hbox>
 									<hbox>
-										<vbox pack="center">
-											<label value="&nrlorderit.fax.label;:" width="100"/>
-										</vbox>
+										<label value="&nrlorderit.fax.label;:" width="100"/>
 										<textbox id="NRLOrderIt-Company-Form-Fax" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.company.fax.tooltip;"/>
 									</hbox>
 									<hbox>
-										<vbox pack="center">
-											<label value="&nrlorderit.website.label;:" width="79"/>
-										</vbox>											
-										<toolbarbutton image="chrome://NRLOrderIt/skin/NRLOrderIt_Webpage-16x16.png" oncommand="Company.currentPage();" tooltiptext="&nrlorderit.company.currentpage.tooltip;"/>
-										<textbox id="NRLOrderIt-Company-Form-Website" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.company.website.tooltip;"/>																									
-									</hbox>									
+										<label value="&nrlorderit.website.label;:" width="100"/>
+										<textbox id="NRLOrderIt-Company-Form-Website" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.company.website.tooltip;"/>
+									</hbox>
 									<hbox>
 										<spacer flex="1"/>
-										<button id="NRLOrderIt-Company-Form-Add" label="&nrlorderit.done.label;" oncommand="Company.add();" tooltiptext="&nrlorderit.company.add.tooltip;"/>
-										<button id="NRLOrderIt-Company-Form-Update" label="&nrlorderit.done.label;" oncommand="Company.edit();" hidden="true" tooltiptext="&nrlorderit.company.update.tooltip;"/>
+										<button id="NRLOrderIt-Company-Form-Add" label="&nrlorderit.add.label;" oncommand="Company.add();" tooltiptext="&nrlorderit.company.add.tooltip;"/>
+										<button id="NRLOrderIt-Company-Form-Update" label="&nrlorderit.update.label;" oncommand="Company.edit();" hidden="true" tooltiptext="&nrlorderit.company.update.tooltip;"/>
 										<button id="NRLOrderIt-Company-Form-Reset" label="&nrlorderit.reset.label;" oncommand="Company.resetForm();" tooltiptext="&nrlorderit.company.reset.tooltip;"/>
 										<button id="NRLOrderIt-Company-Form-Cancel" label="&nrlorderit.cancel.label;" oncommand="Company.cancelForm();" tooltiptext="&nrlorderit.company.cancel.tooltip;"/>
 									</hbox>								
 								</vbox>
 								<menupopup id="NRLOrderIt-Company-ContextMenu">
-									<menuitem label="&nrlorderit.edit.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Edit-16x16.png" oncommand="Company.showUpdateForm();"/>
-									<menuitem label="&nrlorderit.goto.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Goto-16x16.png" oncommand="Company.gotoWebsite();"/>
-									<menuseparator/>
-									<menuitem label="&nrlorderit.delete.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Delete-16x16.png" oncommand="Company.remove();"/>									
+									<menuitem label="&nrlorderit.edit.label;" oncommand="Company.showUpdateForm();"/>
+									<menuitem label="&nrlorderit.delete.label;" oncommand="Company.remove();"/>
 								</menupopup>																			
 								<tree id="NRLOrderIt-Company-Tree" 
 									  seltype="single" 
@@ -645,28 +597,20 @@
 					<tabpanel flex="1">
 						<vbox flex="1">
 							<hbox>
-								<toolbarbutton label="&nrlorderit.new.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Add-16x16.png" oncommand="JobOrderNumber.showAddForm();" tooltiptext="&nrlorderit.jobordernumber.new.tooltip;"/>
-								<toolbarspacer width="5"/>
-								<toolbarbutton label="&nrlorderit.edit.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Edit-16x16.png" oncommand="JobOrderNumber.showUpdateForm();" tooltiptext="&nrlorderit.jobordernumber.edit.tooltip;"/>
-								<toolbarspacer width="5"/>
-								<toolbarbutton label="&nrlorderit.delete.label;" image="chrome://NRLOrderIt/skin/NRLOrderIt_Delete-16x16.png" oncommand="JobOrderNumber.remove();" tooltiptext="&nrlorderit.jobordernumber.delete.tooltip;"/>
-								<toolbarspacer width="5"/>
+								<button label="&nrlorderit.new.label;" oncommand="JobOrderNumber.showAddForm();" tooltiptext="&nrlorderit.jobordernumber.new.tooltip;"/>
+								<button label="&nrlorderit.edit.label;" oncommand="JobOrderNumber.showUpdateForm();" tooltiptext="&nrlorderit.jobordernumber.edit.tooltip;"/>
+								<button label="&nrlorderit.delete.label;" oncommand="JobOrderNumber.remove();" tooltiptext="&nrlorderit.jobordernumber.delete.tooltip;"/>
 								<textbox id="NRLOrderIt-JobOrderNumber-Search" type="search" searchbutton="true" oncommand="JobOrderNumber.search();" tooltiptext="&nrlorderit.jobordernumber.search.tooltip;"/>
 								<spacer flex="1"/>
 							</hbox>	
-							<spacer height="5"/>
 							<hbox flex="1">
 								<vbox id="NRLOrderIt-JobOrderNumber-Form" hidden="true">
 									<hbox>
-										<vbox pack="center">
-											<label value="&nrlorderit.name.label;:" width="100"/>
-										</vbox>
+										<label value="&nrlorderit.name.label;:" width="100"/>
 										<textbox id="NRLOrderIt-JobOrderNumber-Form-Name" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.jobordernumber.name.tooltip;"/>
 									</hbox>
 									<hbox>
-										<vbox pack="center">
-											<label value="&nrlorderit.accountnumber.label;:" width="100"/>
-										</vbox>
+										<label value="&nrlorderit.accountnumber.label;:" width="100"/>
 										<textbox id="NRLOrderIt-JobOrderNumber-Form-Number" width="250" onkeypress="NRLOrderIt.advanceFocus(event);" tooltiptext="&nrlorderit.jobordernumber.accountnumber.tooltip;"/>
 									</hbox>
 									<hbox>
@@ -675,16 +619,15 @@
 									</hbox>
 									<hbox>
 										<spacer flex="1"/>
-										<button id="NRLOrderIt-JobOrderNumber-Form-Add" label="&nrlorderit.done.label;" oncommand="JobOrderNumber.add();" tooltiptext="&nrlorderit.jobordernumber.add.tooltip;"/>
-										<button id="NRLOrderIt-JobOrderNumber-Form-Update" label="&nrlorderit.done.label;" oncommand="JobOrderNumber.edit();" hidden="true" tooltiptext="&nrlorderit.jobordernumber.edit.tooltip;"/>
+										<button id="NRLOrderIt-JobOrderNumber-Form-Add" label="&nrlorderit.add.label;" oncommand="JobOrderNumber.add();" tooltiptext="&nrlorderit.jobordernumber.add.tooltip;"/>
+										<button id="NRLOrderIt-JobOrderNumber-Form-Update" label="&nrlorderit.update.label;" oncommand="JobOrderNumber.edit();" hidden="true" tooltiptext="&nrlorderit.jobordernumber.edit.tooltip;"/>
 										<button id="NRLOrderIt-JobOrderNumber-Form-Reset" label="&nrlorderit.reset.label;" oncommand="JobOrderNumber.resetForm();" tooltiptext="&nrlorderit.jobordernumber.reset.tooltip;"/>		
 										<button id="NRLOrderIt-JobOrderNumber-Form-Cancel" label="&nrlorderit.cancel.label;" oncommand="JobOrderNumber.cancelForm();" tooltiptext="&nrlorderit.jobordernumber.cancel.tooltip;"/>								
 									</hbox>
 								</vbox>
 								<menupopup id="NRLOrderIt-JobOrderNumber-ContextMenu">
-									<menuitem label="&nrlorderit.edit.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Edit-16x16.png" oncommand="JobOrderNumber.showUpdateForm();"/>
-									<menuseparator/>
-									<menuitem label="&nrlorderit.delete.label;" class="menuitem-iconic" image="chrome://NRLOrderIt/skin/NRLOrderIt_Delete-16x16.png" oncommand="JobOrderNumber.remove();"/>
+									<menuitem label="&nrlorderit.edit.label;" oncommand="JobOrderNumber.showUpdateForm();"/>
+									<menuitem label="&nrlorderit.delete.label;" oncommand="JobOrderNumber.remove();"/>
 								</menupopup>			
 								<tree id="NRLOrderIt-JobOrderNumber-Tree" 
 									  seltype="single" 

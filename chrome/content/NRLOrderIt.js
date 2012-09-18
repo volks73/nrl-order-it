@@ -42,23 +42,18 @@ var NRLOrderIt = new function()
 {
 	const EXT_ID = "NRLOrderIt@nrl.navy.mil";
 	const EXT_NAME = "NRLOrderIt";
-	const EXT_TITLE = "NRL Order It";
 	const EXT_DIR = "extensions";
 	const DEFAULTS_DIR = "defaults";
 	const DB_FILE = "NRLOrderIt.sqlite";
 	const DB_DEFAULT_FILE = "NRLOrderIt_default.sqlite";
 	const DB_PATH = "profile:" + DB_FILE;
 		
-	var titleState;
-	var toolbarCollapseState;
-	
 	this.conn = null;
 	this.prefs = null;
 	
 	this.onLoad = onLoad;
 	this.updateMessage = updateMessage;
 	this.toggleDisplay = toggleDisplay;
-	this.toggleFullscreen = toggleFullscreen;
 	this.advanceFocus = advanceFocus;
 	this.displayPreferences = displayPreferences;
 	this.displayMessage = displayMessage;
@@ -71,139 +66,29 @@ var NRLOrderIt = new function()
 	 */
 	function onLoad()
 	{	
-		var version = -1;
-		var firstRun = true;
-		
-		this.prefs = Components.classes["@mozilla.org/preferences-service;1"]
-		                                .getService(Components.interfaces.nsIPrefService)
-		                                .getBranch("nrlorderit.");
-		this.prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
-				
-		firstRun = this.prefs.getBoolPref('firstrun');
-		
-		/*
-		 * Install.
-		 */
-		if ( firstRun )
-		{
-			this.prefs.setBoolPref('firstrun', false);
-			createDatabase(this.prefs.getCharPref('version'));
-			
-			try 
-			{
-				// Firefox 4 and later;
-				Components.utils.import("resource://gre/modules/AddonManager.jsm");
-				AddonManager.getAddonByID(EXT_ID, function(addon)
-				{
-					var tempPrefs = Components.classes["@mozilla.org/preferences-service;1"]
-					.getService(Components.interfaces.nsIPrefService)
-                    .getBranch("nrlorderit.");
-					
-					tempPrefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
-					tempPrefs.setCharPref('version', addon.version);
-				}); 					
-			}
-			catch ( ex ) 
-			{
-				// Firefox 3.6 and before
-				var gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
-				this.prefs.setCharPref('version', gExtensionManager.getItemForID(EXT_ID).version);
-			}
-				
-			showTutorial();
-		}
-		
-		// TODO: Upgrade code
-		
-		window.removeEventListener("load", function() { NRLOrderIt.onLoad(); }, true);
-		
-		var storageService = Components.classes["@mozilla.org/storage/service;1"].getService(Components.interfaces.mozIStorageService);
-		
-		/*
-		 * Create the connection. This method will create the database file, but it shouldn't have to 
-		 * based on the preceding code.
-		 */
-		this.conn = storageService.openDatabase(getDBFile());
-		
-		/*
-		 * Now that the database file has been located and/or created, set the data sources
-		 * for the database-driven UI elements.
-		 */
-		setDataSources();
-	}
-	
-	/**
-	 * Gets the database file.
-	 */
-	function getDBFile()
-	{
 		/*
 		 * Get the profile folder. The database file is located in ProfD/NRLOrderIt while
 		 * the extension contents are located at ProfD/extensions/NRLOrderIt
 		 */
 		var profileDir = Components.classes["@mozilla.org/file/directory_service;1"]  
 			                     .getService(Components.interfaces.nsIProperties)  
-			                     .get("ProfD", Components.interfaces.nsIFile);
-		
+			                     .get("ProfD", Components.interfaces.nsIFile);  
+						
+		/*
+		 * Create the database file.
+		 */
 		var dbFile = profileDir.clone();
 		dbFile.append(DB_FILE);
 		
-		return dbFile;
-	}
-	
-	/**
-	 * Creates the database file.
-	 * 
-	 * @param version The already installed version.
-	 */
-	function createDatabase(version)
-	{
-		/*
-		 * Get the profile folder. The database file is located in ProfD/NRLOrderIt while
-		 * the extension contents are located at ProfD/extensions/NRLOrderIt
-		 */
-		var profileDir = Components.classes["@mozilla.org/file/directory_service;1"]  
-			                     .getService(Components.interfaces.nsIProperties)  
-			                     .get("ProfD", Components.interfaces.nsIFile);
-		
-		var dbFile = getDBFile();
-		
-		/*
-		 * It maybe the first run, but an old database may be around, so let's be careful.
-		 */
-		if ( dbFile.exists() )
+		if ( !dbFile.exists() )
 		{
-			try
-			{
-				if ( version )
-				{
-					dbFile.copyTo(profileDir, EXT_NAME + "_" + version + ".sqlite");
-				}
-				else
-				{
-					dbFile.copyTo(profileDir, EXT_NAME + "_old.sqlite");
-				}
-			}
-			catch ( e )
-			{
-				/*
-				 * Do nothing.
-				 */
-			}
-		}
-		else
-		{
-			// %APPDATA%\Roaming\Mozilla\Firefox\Profiles\
 			var defaultsDir = profileDir.clone();
-			// %APPDATA%\Roaming\Mozilla\Firefox\Profiles\extensions\
 			defaultsDir.append(EXT_DIR)
-			// %APPDATA%\Roaming\Mozilla\Firefox\Profiles\extensions\NRLOrderIt@nrl.navy.mil
 			defaultsDir.append(EXT_ID);
-			// %APPDATA%\Roaming\Mozilla\Firefox\Profiles\extensions\NRLOrderIt@nrl.navy.mil\defaults
 			defaultsDir.append(DEFAULTS_DIR);
-							
+			
 			var defaultDB = null;
-					
+			
 			if ( defaultsDir.exists() )
 			{
 				defaultDB = defaultsDir.clone();
@@ -221,89 +106,36 @@ var NRLOrderIt = new function()
 				 */
 				var dbDir = profileDir.clone();
 				dbDir.append(EXT_NAME);
-					
+				
 				if ( dbDir.exists() )
 				{
 					defaultDB = dbDir.clone();
 				}
 			}
-					
+			
 			defaultDB.append(DB_DEFAULT_FILE);
 			defaultDB.copyTo(profileDir, DB_FILE);
-		}
-	}
-	
-	/**
-	 * Shows the mini-tutorial in a new tab.
-	 */
-	function showTutorial()
-	{
+		}		
+		
+		var storageService = Components.classes["@mozilla.org/storage/service;1"]
+					                              .getService(Components.interfaces.mozIStorageService);
+					
 		/*
-		 * Loads a page by opening a new tab. Useful for loading a mini tutorial.
+		 * Create the connection. This method will create the database file, but it shouldn't have to 
+		 * based on the preceding code.
 		 */
-		window.setTimeout(function()
-		{
-			gBrowser.selectedTab = gBrowser.addTab("chrome://NRLOrderIt/content/Tutorial.html");
-		}, 1500); // Firefox 2 fix - or else tab will get closed
-	}
-	
-	
-	/**
-	 * Toggles full screen mode.
-	 */
-	function toggleFullscreen()
-	{		
-		var nrlOrderItPane = document.getElementById('NRLOrderIt-pane');
-		var toolbox = getNavToolbox();
-		var makeFullscreen = nrlOrderItPane.flex == "0";
+		this.conn = storageService.openDatabase(dbFile);
 		
-		if ( makeFullscreen )
-		{
-			nrlOrderItPane.setAttribute('flex', "1");
-		}
-		else
-		{
-			nrlOrderItPane.setAttribute('flex', "0");
-		}
+		this.prefs = Components.classes["@mozilla.org/preferences-service;1"]
+	                                .getService(Components.interfaces.nsIPrefService)
+	                                .getBranch("nrlorderit.");
+		this.prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
 		
-		document.getElementById('content').setAttribute('collapsed', makeFullscreen);
-		document.getElementById('NRLOrderIt-splitter').setAttribute('hidden', makeFullscreen);
-		
-		if ( makeFullscreen )
-		{
-			if( document.title != EXT_TITLE ) 
-			{
-				titleState = document.title;
-				document.title = EXT_TITLE;
-			}
-			
-			if( !toolbarCollapseState ) 
-			{
-				toolbarCollapseState = [node.collapsed for each (node in toolbox.childNodes)];
-				
-				for( var i=0; i<toolbox.childNodes.length; i++ )
-				{
-					toolbox.childNodes[i].collapsed = true;
-				}
-			}
-		}
-		else
-		{
-			if ( document.title == EXT_TITLE )
-			{
-				document.title = titleState;
-			}
-			
-			if( toolbarCollapseState )
-			{
-				for( var i=0; i<toolbox.childNodes.length; i++ )
-				{
-					toolbox.childNodes[i].collapsed = toolbarCollapseState[i];
-				}
-				
-				toolbarCollapseState = undefined;
-			}
-		}
+		/*
+		 * Now that the database file has been located and/or created, set the data sources
+		 * for the database-driven UI elements.
+		 */
+		setDataSources();
 	}
 	
 	/**
@@ -414,7 +246,6 @@ var NRLOrderIt = new function()
 		if ( nrlOrderItPane.getAttribute('hidden') == 'true' )
 		{
 			var isHidden = true;
-			updateMessage('welcome');
 		}
 
 		splitter.setAttribute('hidden', !isHidden);
@@ -422,4 +253,4 @@ var NRLOrderIt = new function()
 	}
 }
 
-window.addEventListener("load", function() { NRLOrderIt.onLoad(); }, true);
+window.addEventListener("load", function(e) { NRLOrderIt.onLoad(e); }, false);

@@ -56,8 +56,8 @@ var PurchaseOrder = new function()
 {
 	var id = '';
 	var title = '';
-	var company = -1;
-	var jobOrderNumber = -1;
+	var company = false;
+	var jobOrderNumber = false;
 	var originator = '';
 	var deliverTo = '';
 	var priority = '';
@@ -81,12 +81,9 @@ var PurchaseOrder = new function()
 	this.editItem = editItem;
 	this.updateItem = updateItem;
 	this.removeAllItems = removeAllItems;
-	this.view = view;
-	this.print = print;
+	this.generate = generate;
 	this.copy = copy;
 	this.search = search;
-	this.submit = submit;
-	this.receive = receive;
 	
 	/**
 	 * Clears the purchase order and item fields.
@@ -94,25 +91,17 @@ var PurchaseOrder = new function()
 	function clear()
 	{		
 		id = '';
-		title = "";
+		title = NRLOrderIt.prefs.getCharPref("default.title");
 		company = false;
 		jobOrderNumber = false;
-		originator = NRLOrderIt.prefs.getCharPref('default.originator');
-		deliverTo = NRLOrderIt.prefs.getCharPref('default.deliverto');
-		priority = NRLOrderIt.prefs.getCharPref('default.priority');
-		
+		originator = NRLOrderIt.prefs.getCharPref("default.originator");
+		deliverTo = NRLOrderIt.prefs.getCharPref("default.deliverto");
+		priority = NRLOrderIt.prefs.getCharPref("default.priority");
 		dateRequired = new Date();
-		dateRequired.setDate(dateRequired.getDate() + NRLOrderIt.prefs.getIntPref('default.daterequired'));
-		
 		amount = '';
 		dateAdded = new Date();
-		
-		/*
-		 * Date submitted and date received are Date objects, but they have no actual date.
-		 */
-		dateSubmitted = new Date('NaN');
-		dateReceived = new Date('NaN');
-		
+		dateSubmitted = new Date();
+		dateRequired = new Date();
 		notes = '';	
 		
 		item.id = '';
@@ -479,9 +468,7 @@ var PurchaseOrder = new function()
 		var formDeliverTo = document.getElementById('NRLOrderIt-PurchaseOrder-Form-DeliverTo');
 		var formPriority = document.getElementById('NRLOrderIt-PurchaseOrder-Form-Priority');
 		var formDateRequired = document.getElementById('NRLOrderIt-PurchaseOrder-Form-DateRequired');
-		var formSubmitted = document.getElementById('NRLOrderIt-PurchaseOrder-Form-Submitted');
 		var formDateSubmitted = document.getElementById('NRLOrderIt-PurchaseOrder-Form-DateSubmitted');
-		var formReceived = document.getElementById('NRLOrderIt-PurchaseOrder-Form-Received');
 		var formDateReceived = document.getElementById('NRLOrderIt-PurchaseOrder-Form-DateReceived');
 		var formNotes = document.getElementById('NRLOrderIt-PurchaseOrder-Form-Notes');
 		
@@ -493,12 +480,6 @@ var PurchaseOrder = new function()
 		}
 		else
 		{
-			var formJobOrderNumberId = document.getElementById('NRLOrderIt-PurchaseOrder-Form-JobOrderNumberId');
-			formJobOrderNumberId.textContent = jobOrderNumber;
-			
-			var jobOrderNumberMenu = document.getElementById('NRLOrderIt-PurchaseOrder-Form-JobOrderNumber');
-			jobOrderNumberMenu.builder.rebuild();
-			
 			var menuItems = formJobOrderNumber.getElementsByTagName('menuitem');
 			for ( var i = 0; i < menuItems.length; i++ )
 			{
@@ -516,12 +497,6 @@ var PurchaseOrder = new function()
 		}
 		else
 		{
-			var formCompanyId = document.getElementById('NRLOrderIt-PurchaseOrder-Form-CompanyId');
-			formCompanyId.textContent = company;
-			
-			var companyMenu = document.getElementById('NRLOrderIt-PurchaseOrder-Form-Company');
-			companyMenu.builder.rebuild();
-			
 			var menuItems = formCompany.getElementsByTagName('menuitem');
 			for ( var i = 0; i < menuItems.length; i++ )
 			{
@@ -540,25 +515,19 @@ var PurchaseOrder = new function()
 		formNotes.value = notes;
 		
 		if ( isNaN(dateSubmitted.getTime()) )
-		{			
+		{
+			var formSubmitted = document.getElementById('NRLOrderIt-PurchaseOrder-Form-Submitted');
 			formSubmitted.checked = false;
 			dateSubmitted = new Date();			 
-		}
-		else
-		{
-			formSubmitted.checked = true;
 		}
 		
 		formDateSubmitted.dateValue = dateSubmitted;
 		
 		if ( isNaN(dateReceived.getTime()) )
-		{			
+		{
+			var formReceived = document.getElementById('NRLOrderIt-PurchaseOrder-Form-Received');
 			formReceived.checked = false;
 			dateReceived = new Date();			 
-		}
-		else
-		{
-			formReceived.checked = true;
 		}
 		
 		formDateReceived.dateValue = dateReceived;
@@ -584,15 +553,7 @@ var PurchaseOrder = new function()
 		
 		getFormItem();
 		
-		if( item.hazmatCode <= 0 )
-		{
-			NRLOrderIt.displayMessage('item.hazmatCode');
-		}
-		else if ( item.unitPrice <= 0.0 )
-		{
-			NRLOrderIt.displayMessage('item.unitPrice');
-		}
-		else
+		if ( item.hazmatCode > 0 )
 		{
 			insertItem();		
 			resetItemForm();		
@@ -600,6 +561,10 @@ var PurchaseOrder = new function()
 			updateItemSummary();
 			
 			NRLOrderIt.updateMessage("item.add");
+		}
+		else
+		{
+			NRLOrderIt.displayMessage('item.hazmatCode');
 		}		
 	}
 	
@@ -871,187 +836,171 @@ var PurchaseOrder = new function()
 	}
 	
 	/**
-	 * Generates a HTML document of the selected purchase order in a new browser tab.
+	 * Creates a purchase order document in HTML.
 	 */
-	function view()
+	function generate()
 	{
-		id = getSelectedId();
+		var purchaseOrderTree = document.getElementById('NRLOrderIt-PurchaseOrder-Tree');
+		var currentIndex = purchaseOrderTree.view.selection.currentIndex;
 		
-		if ( id )
-		{				
+		if ( currentIndex > -1 )
+		{
+			var purchaseOrderTitleColumn = purchaseOrderTree.columns.getNamedColumn('NRLOrderIt-PurchaseOrder-Tree-Title');
+			id = purchaseOrderTree.view.getCellValue(currentIndex, purchaseOrderTitleColumn);
+	
+			var statement = NRLOrderIt.conn.createStatement("SELECT title, originator, deliver_to, priority, date_required, companies.name as company, companies.address as address, phone, fax, website, job_order_numbers.job_order_number as jobOrderNumber, SUM(items.unit_price * items.quantity) as amount FROM purchase_orders OUTER LEFT JOIN items ON purchase_orders.purchase_orders_id = items.purchase_orders_id OUTER LEFT JOIN companies ON purchase_orders.companies_id = companies.companies_id OUTER LEFT JOIN job_order_numbers ON purchase_orders.job_order_numbers_id = job_order_numbers.job_order_numbers_id WHERE purchase_orders.purchase_orders_id = :purchaseOrdersId GROUP BY purchase_orders.purchase_orders_id");
+			statement.params.purchaseOrdersId = id;
+			statement.executeStep();
+			title = statement.row.title;
+			originator = statement.row.originator;
+			deliverTo = statement.row.deliver_to;
+			priority = statement.row.priority;
+			dateRequired = new Date(parseInt(statement.row.date_required) * 1000);
+			var company = statement.row.company;
+			var address = statement.row.address;
+			var account = statement.row.jobOrderNumber;
+			var phone = statement.row.phone;
+			var fax = statement.row.fax;
+			var website = statement.row.website;
+			amount = parseFloat(statement.row.amount).toFixed(2);
+			var currentDate = new Date();
+			statement.reset();
+			
 			var newTabBrowser = gBrowser.getBrowserForTab(gBrowser.addTab("chrome://NRLOrderIt/content/PurchaseOrderForm.html"));
 			newTabBrowser.addEventListener("load", function()
 			{
-				populateHTMLForm(newTabBrowser.contentDocument);
+				newTabBrowser.contentDocument.title = title;
+				var htmlDate = newTabBrowser.contentDocument.getElementById('htmlDate');
+				htmlDate.innerHTML = currentDate.getMonth() + 1 + "/" + currentDate.getDate() + "/" + currentDate.getFullYear();
+				
+				var htmlOriginator = newTabBrowser.contentDocument.getElementById('htmlOriginator');
+				htmlOriginator.innerHTML = originator;
+				
+				var htmlDeliverTo = newTabBrowser.contentDocument.getElementById('htmlDeliverTo');
+				htmlDeliverTo.innerHTML = deliverTo;
+				
+				var htmlPriority = newTabBrowser.contentDocument.getElementById('htmlPriority');
+				htmlPriority.innerHTML = priority;
+				
+				var htmlDateRequired = newTabBrowser.contentDocument.getElementById('htmlDateRequired');
+				htmlDateRequired.innerHTML = (dateRequired.getMonth() + 1) + "/" + dateRequired.getDate() + "/" + dateRequired.getFullYear();
+				
+				var htmlTotal = newTabBrowser.contentDocument.getElementById('htmlTotal');
+				htmlTotal.innerHTML = amount;
+				
+				var htmlJobOrderNumber = newTabBrowser.contentDocument.getElementById('htmlJobOrderNumber');
+				htmlJobOrderNumber.innerHTML = account;
+				
+				var htmlAddress = newTabBrowser.contentDocument.getElementById('htmlAddress');
+				htmlAddress.innerHTML = company + "<br/>" + address + "<br/>" + website;
+				
+				var htmlPhone = newTabBrowser.contentDocument.getElementById('htmlPhone');
+				htmlPhone.innerHTML = phone;
+				
+				var htmlFax = newTabBrowser.contentDocument.getElementById('htmlFax');
+				htmlFax.innerHTML = fax;
+				
+				var itemStatement = NRLOrderIt.conn.createStatement("SELECT part_number, items.description, unit_of_issue, unit_price, quantity, (unit_price * quantity) as totalCost, hazmat_codes.letter as hazmatCode FROM items OUTER LEFT JOIN hazmat_codes ON items.hazmat_codes_id = hazmat_codes.hazmat_codes_id WHERE items.purchase_orders_id = :purchaseOrdersId");
+				itemStatement.params.purchaseOrdersId = id;
+				
+				var index = 1;
+				var htmlItems = newTabBrowser.contentDocument.getElementById('htmlItems');
+				while ( itemStatement.executeStep() )
+				{			
+					var itemRow = newTabBrowser.contentDocument.createElement('tr');
+					itemRow.setAttribute('class', 'items');
+					var itemNumberCell = newTabBrowser.contentDocument.createElement('td');
+					itemNumberCell.innerHTML = index;
+					itemRow.appendChild(itemNumberCell);
+					
+					var itemPartNumberCell = newTabBrowser.contentDocument.createElement('td');
+					itemPartNumberCell.innerHTML = itemStatement.row.part_number;
+					itemRow.appendChild(itemPartNumberCell);
+					
+					var itemDescriptionCell = newTabBrowser.contentDocument.createElement('td');
+					var description = itemStatement.row.description + ' Hazmat Code: (<span style="font-weight: bold;">' + itemStatement.row.hazmatCode + "</span>)";
+					itemDescriptionCell.innerHTML = description;
+					itemRow.appendChild(itemDescriptionCell);
+					
+					var itemUnitOfIssueCell = newTabBrowser.contentDocument.createElement('td');
+					itemUnitOfIssueCell.innerHTML = itemStatement.row.unit_of_issue;
+					itemRow.appendChild(itemUnitOfIssueCell);
+					
+					var itemQuantityCell = newTabBrowser.contentDocument.createElement('td');
+					itemQuantityCell.innerHTML = itemStatement.row.quantity;
+					itemRow.appendChild(itemQuantityCell);
+					
+					var itemUnitPriceCell = newTabBrowser.contentDocument.createElement('td');
+					itemUnitPriceCell.innerHTML = parseFloat(itemStatement.row.unit_price).toFixed(2);
+					itemRow.appendChild(itemUnitPriceCell);
+		
+					var itemTotalCostCell = newTabBrowser.contentDocument.createElement('td');
+					itemTotalCostCell.setAttribute('class', 'end');
+					itemTotalCostCell.innerHTML = parseFloat(itemStatement.row.totalCost).toFixed(2);
+					itemRow.appendChild(itemTotalCostCell);
+					
+					htmlItems.appendChild(itemRow);
+					index++;
+				}
+				
+				itemStatement.reset();
+				
+				/*
+				 * Add blank rows to the end of the form.
+				 */
+				var remainingRows = 14 - index;
+				
+				while ( remainingRows >= 0 )
+				{
+					var itemRow = newTabBrowser.contentDocument.createElement('tr');
+					itemRow.appendChild(newTabBrowser.contentDocument.createElement('td'));
+					itemRow.appendChild(newTabBrowser.contentDocument.createElement('td'));
+					itemRow.appendChild(newTabBrowser.contentDocument.createElement('td'));
+					itemRow.appendChild(newTabBrowser.contentDocument.createElement('td'));
+					itemRow.appendChild(newTabBrowser.contentDocument.createElement('td'));
+					itemRow.appendChild(newTabBrowser.contentDocument.createElement('td'));
+					
+					var endCell = newTabBrowser.contentDocument.createElement('td')
+					endCell.setAttribute('class', 'end');
+					itemRow.appendChild(endCell);
+				
+					htmlItems.appendChild(itemRow);
+					
+					remainingRows--;
+				}
+				
 				gBrowser.tabContainer.advanceSelectedTab(1, true);
-			}, true);
-							
-			NRLOrderIt.updateMessage('purchaseorder.generate');				
-		}
-	}
-	
-	/**
-	 * Sets the date submitted to the current date.
-	 */
-	function submit()
-	{
-		id = getSelectedId();
-		
-		if ( id )
-		{
-			dateSubmitted = new Date();
-			
-			var statement = NRLOrderIt.conn.createStatement("UPDATE purchase_orders SET " +
-					"date_submitted = :dateSubmitted " +
-					"WHERE purchase_orders_id = :purchaseOrdersId");
-			
-			statement.params.purchaseOrdersId = id;
-			
-			var dateSubmittedTime = Math.round(dateSubmitted.getTime() / 1000);		
-			statement.params.dateSubmitted = dateSubmittedTime;
-						
-			statement.execute();
-			statement.reset();
-			
-			rebuildTree();
-			
-			NRLOrderIt.updateMessage('purchaseorder.submit');
-		}
-	}
-	
-	/**
-	 * Sets the date received to the current date.
-	 */
-	function receive()
-	{
-		id = getSelectedId();
-		
-		if ( id )
-		{
-			dateReceived = new Date();
-			
-			var statement = NRLOrderIt.conn.createStatement("UPDATE purchase_orders SET " +
-					"date_received = :dateReceived " +
-					"WHERE purchase_orders_id = :purchaseOrdersId");
-			
-			statement.params.purchaseOrdersId = id;
-			
-			var dateReceivedTime = Math.round(dateReceived.getTime() / 1000);		
-			statement.params.dateReceived = dateReceivedTime;
-						
-			statement.execute();
-			statement.reset();
-			
-			rebuildTree();
-			
-			NRLOrderIt.updateMessage('purchaseorder.receive');
-		}
-	}
-	
-	/**
-	 * Prints the selected purchase order. The HTML form is loaded into a hidden iframe, not a tab, and sends the completed form directly to
-	 * the printer.
-	 */
-	function print()
-	{
-		id = getSelectedId();
-		
-		if ( id )
-		{
-			var frame = document.getElementById('sample-frame');
-			
-			if ( !frame )
-			{
-				frame = document.createElement("iframe");
-				frame.setAttribute("id", "sample-frame");
-				frame.setAttribute("name", "sample-frame");
-				frame.setAttribute("type", "content");
-				frame.setAttribute("collapsed", "true");
-				document.getElementById("main-window").appendChild(frame);
-		
-				frame.webNavigation.allowAuth = false;
-				frame.webNavigation.allowImages = false;
-				frame.webNavigation.allowJavascript = false;
-				frame.webNavigation.allowMetaRedirects = true;
-				frame.webNavigation.allowPlugins = false;
-				frame.webNavigation.allowSubframes = false;
-			}
-	
-			frame.addEventListener("load", function(event)
-			{
-				var doc = event.originalTarget;
 				
-				if ( doc.location.href == "about:blank" || doc.defaultView.frameElement )
-				{
-					return;
+				NRLOrderIt.updateMessage('purchaseorder.generate');
+				
+				if ( NRLOrderIt.prefs.getBoolPref("general.print") )
+				{					
+					var printSetup = new jsPrintSetup();
+					printSetup.setOption('orientation', jsPrintSetup.kPortraitOrientation);
+					printSetup.setPaperSizeUnit(jsPrintSetup.kPaperSizeInches);
+					printSetup.setOption('marginTop', 0.5);
+					printSetup.setOption('marginBottom', 0.5);
+					printSetup.setOption('marginLeft', 0.4);
+					printSetup.setOption('marginRight', 0.3);
+					printSetup.setOption('printBGColors', 1);
+					printSetup.setOption('headerStrLeft', "");
+					printSetup.setOption('headerStrCenter', "");
+					printSetup.setOption('headerStrRight', "");
+					printSetup.setOption('footerStrLeft', "");
+					printSetup.setOption('footerStrCenter', "");
+					printSetup.setOption('footerStrRight', "");
+					printSetup.setOption('shrinkToFit', 1);
+					printSetup.setOption('paperHeight', 11);
+					printSetup.setOption('paperWidth', 8.5);
+					printSetup.printWindow(newTabBrowser.contentWindow);
+					
+					if ( NRLOrderIt.prefs.getBoolPref("general.closeonprint") )
+					{
+						gBrowser.removeCurrentTab();
+					}
 				}
 				
-				populateHTMLForm(doc);
-				
-				var printSetup = new jsPrintSetup();
-				printSetup.setOption('orientation', jsPrintSetup.kPortraitOrientation);
-				printSetup.setPaperSizeUnit(jsPrintSetup.kPaperSizeInches);
-				printSetup.setOption('marginTop', 0.5);
-				printSetup.setOption('marginBottom', 0.5);
-				printSetup.setOption('marginLeft', 0.4);
-				printSetup.setOption('marginRight', 0.3);
-				printSetup.setOption('printBGColors', 1);
-				printSetup.setOption('headerStrLeft', "");
-				printSetup.setOption('headerStrCenter', "");
-				printSetup.setOption('headerStrRight', "");
-				printSetup.setOption('footerStrLeft', "");
-				printSetup.setOption('footerStrCenter', "");
-				printSetup.setOption('footerStrRight', "");
-				printSetup.setOption('shrinkToFit', 1);
-				printSetup.setOption('paperHeight', 11);
-				printSetup.setOption('paperWidth', 8.5);
-				
-				printSetup.setPrintProgressListener(
-				{
-				    QueryInterface : function(aIID) 
-				    {
-						if ( aIID.equals(Components.interfaces.nsIWebProgressListener) || aIID.equals(Components.interfaces.nsISupportsWeakReference) || aIID.equals(Components.interfaces.nsISupports) )
-						{
-							return this;
-						}
-						
-						throw Components.results.NS_NOINTERFACE;
-						
-					},
-			
-					onStateChange : function(aWebProgress, aRequest, aStateFlags, aStatus) 
-					{
-						if ( aStateFlags & Components.interfaces.nsIWebProgressListener.STATE_STOP )
-						{
-							var frame = document.getElementById('sample-frame');
-							frame.contentDocument.location.href = "about:blank";
-						}
-						    	
-						return 0;
-					},
-						    
-					onLocationChange : function(aWebProgress, aRequest, aLocation) 
-					{
-						return 0;
-					},
-			
-					onProgressChange : function(aWebProgress, aRequest, aCurSelfProgress, aMaxSelfProgress, aCurTotalProgress, aMaxTotalProgress){},
-					onStatusChange : function(aWebProgress, aRequest, aStateFlags, aStatus) {},
-					onSecurityChange : function(aWebProgress, aRequest, aState) {}
-				});
-				
-				if ( !NRLOrderIt.prefs.getBoolPref('general.showprintdialog') )
-				{
-					printSetup.clearSilentPrint();
-					printSetup.setOption('printSilent', 1);
-				}
-				
-				printSetup.printWindow(frame.contentWindow);
-			}, true);
-		
-			frame.contentDocument.location.href = "chrome://NRLOrderIt/content/PurchaseOrderForm.html";
-			
-			NRLOrderIt.updateMessage('purchaseorder.print');
+			}, true);						
 		}
 	}
 	
@@ -1060,10 +1009,14 @@ var PurchaseOrder = new function()
 	 */
 	function copy()
 	{
-		id = getSelectedId();
-				
-		if ( id )
-		{						
+		var purchaseOrderTree = document.getElementById('NRLOrderIt-PurchaseOrder-Tree');
+		var currentIndex = purchaseOrderTree.view.selection.currentIndex;
+		
+		if ( currentIndex > -1 )
+		{
+			var purchaseOrderTitleColumn = purchaseOrderTree.columns.getNamedColumn('NRLOrderIt-PurchaseOrder-Tree-Title');
+			id = purchaseOrderTree.view.getCellValue(currentIndex, purchaseOrderTitleColumn);
+			
 			var statement = NRLOrderIt.conn.createStatement("SELECT title, originator, deliver_to, priority, date_required, companies_id, job_order_numbers_id FROM purchase_orders WHERE purchase_orders_id = :purchaseOrdersId GROUP BY purchase_orders.purchase_orders_id");
 			statement.params.purchaseOrdersId = id;
 			statement.executeStep();
@@ -1102,198 +1055,6 @@ var PurchaseOrder = new function()
 			rebuildTree();
 			
 			NRLOrderIt.updateMessage('purchaseorder.copy');
-		}
-	}
-	
-	/**
-	 * Gets the selected purchase order ID from the purchase order tree.
-	 */
-	function getSelectedId()
-	{
-		var purchaseOrderTree = document.getElementById('NRLOrderIt-PurchaseOrder-Tree');
-		var currentIndex = purchaseOrderTree.view.selection.currentIndex;
-		var purchaseOrderId = false;
-		
-		if ( currentIndex > -1 )
-		{	
-			var purchaseOrderTitleColumn = purchaseOrderTree.columns.getNamedColumn('NRLOrderIt-PurchaseOrder-Tree-Title');
-			purchaseOrderId = purchaseOrderTree.view.getCellValue(currentIndex, purchaseOrderTitleColumn);
-		}
-		
-		return purchaseOrderId;
-	}
-	
-	
-	/**
-	 * Populates the HTML form for a purchase order with the values form the database.
-	 */
-	function populateHTMLForm(htmlDocument)
-	{
-		var statement = NRLOrderIt.conn.createStatement("SELECT title, originator, deliver_to, priority, date_required, companies.name as company, companies.address as address, phone, fax, website, job_order_numbers.job_order_number as jobOrderNumber, SUM(items.unit_price * items.quantity) as amount FROM purchase_orders OUTER LEFT JOIN items ON purchase_orders.purchase_orders_id = items.purchase_orders_id OUTER LEFT JOIN companies ON purchase_orders.companies_id = companies.companies_id OUTER LEFT JOIN job_order_numbers ON purchase_orders.job_order_numbers_id = job_order_numbers.job_order_numbers_id WHERE purchase_orders.purchase_orders_id = :purchaseOrdersId GROUP BY purchase_orders.purchase_orders_id");
-		statement.params.purchaseOrdersId = id;
-		statement.executeStep();
-		title = statement.row.title;
-		originator = statement.row.originator;
-		deliverTo = statement.row.deliver_to;
-		priority = statement.row.priority;
-		dateRequired = new Date(parseInt(statement.row.date_required) * 1000);
-		var company = statement.row.company;
-		var address = statement.row.address;
-		var account = statement.row.jobOrderNumber;
-		var phone = statement.row.phone;
-		var fax = statement.row.fax;
-		var website = statement.row.website;
-		amount = parseFloat(statement.row.amount).toFixed(2);
-		var currentDate = new Date();
-		statement.reset();
-		
-		var formattedDate = currentDate.getMonth() + 1 + "/" + currentDate.getDate() + "/" + currentDate.getFullYear(); 
-			
-		htmlDocument.title = title;
-		var htmlDate = htmlDocument.getElementById('htmlDate');
-		htmlDate.innerHTML = formattedDate; 
-			
-		var htmlOriginator = htmlDocument.getElementById('htmlOriginator');
-		htmlOriginator.innerHTML = originator;
-			
-		var htmlDeliverTo = htmlDocument.getElementById('htmlDeliverTo');
-		htmlDeliverTo.innerHTML = deliverTo;
-			
-		var htmlPriority = htmlDocument.getElementById('htmlPriority');
-		htmlPriority.innerHTML = priority;
-			
-		var htmlDateRequired = htmlDocument.getElementById('htmlDateRequired');
-		htmlDateRequired.innerHTML = (dateRequired.getMonth() + 1) + "/" + dateRequired.getDate() + "/" + dateRequired.getFullYear();
-			
-		var htmlTotal = htmlDocument.getElementById('htmlTotal');
-		htmlTotal.innerHTML = amount;
-			
-		var htmlJobOrderNumber = htmlDocument.getElementById('htmlJobOrderNumber');
-		htmlJobOrderNumber.innerHTML = account;
-			
-		var htmlAddress = htmlDocument.getElementById('htmlAddress');
-		htmlAddress.innerHTML = company + "<br/>" + address + "<br/>" + website;
-			
-		var htmlPhone = htmlDocument.getElementById('htmlPhone');
-		htmlPhone.innerHTML = phone;
-			
-		var htmlFax = htmlDocument.getElementById('htmlFax');
-		htmlFax.innerHTML = fax;
-			
-		var htmlSignatureTitle = htmlDocument.getElementById('htmlSignatureTitle');
-		htmlSignatureTitle.innerHTML = NRLOrderIt.prefs.getCharPref('default.signaturetitle');
-			
-		if ( NRLOrderIt.prefs.getBoolPref('general.signaturedate') )
-		{
-			var htmlSignatureDate = htmlDocument.getElementById('htmlSignatureDate');
-			htmlSignatureDate.innerHTML = formattedDate;
-		}
-			
-		var itemStatement = NRLOrderIt.conn.createStatement("SELECT part_number, items.description, unit_of_issue, unit_price, quantity, (unit_price * quantity) as totalCost, hazmat_codes.letter as hazmatCode FROM items OUTER LEFT JOIN hazmat_codes ON items.hazmat_codes_id = hazmat_codes.hazmat_codes_id WHERE items.purchase_orders_id = :purchaseOrdersId");
-		itemStatement.params.purchaseOrdersId = id;
-			
-		var index = 1;
-		var htmlItems = htmlDocument.getElementById('htmlItems');
-		htmlDocument.getElementById('htmlItemsHeader');
-		
-		/*
-		 * Clear all previous items. This fixes a bug were on successive prints, items keep
-		 * getting appended to the end of the purchase order. In other words, the items
-		 * list needs to be clear each time the form is populated.
-		 */
-		while( htmlItems.hasChildNodes() )
-		{			
-			htmlItems.removeChild(htmlItems.firstChild);
-		}
-
-		while ( itemStatement.executeStep() )
-		{			
-			var itemRow = htmlDocument.createElement('tr');
-			itemRow.setAttribute('class', 'items');
-			var itemNumberCell = htmlDocument.createElement('td');
-			itemNumberCell.setAttribute('class', 'lineItem');
-			itemNumberCell.innerHTML = index;
-			itemRow.appendChild(itemNumberCell);
-				
-			var itemPartNumberCell = htmlDocument.createElement('td');
-			itemPartNumberCell.setAttribute('class', 'part');
-			itemPartNumberCell.innerHTML = itemStatement.row.part_number;
-			itemRow.appendChild(itemPartNumberCell);
-				
-			var itemDescriptionCell = htmlDocument.createElement('td');
-			var description = itemStatement.row.description + ' Hazmat Code: (<span style="font-weight: bold;">' + itemStatement.row.hazmatCode + "</span>)";
-			itemDescriptionCell.setAttribute('class', 'description');
-			itemDescriptionCell.innerHTML = description;
-			itemRow.appendChild(itemDescriptionCell);
-				
-			var itemUnitOfIssueCell = htmlDocument.createElement('td');
-			itemUnitOfIssueCell.setAttribute('class', 'unitOfIssue');
-			itemUnitOfIssueCell.innerHTML = itemStatement.row.unit_of_issue;
-			itemRow.appendChild(itemUnitOfIssueCell);
-				
-			var itemQuantityCell = htmlDocument.createElement('td');
-			itemQuantityCell.setAttribute('class', 'qty');
-			itemQuantityCell.innerHTML = itemStatement.row.quantity;
-			itemRow.appendChild(itemQuantityCell);
-				
-			var itemUnitPriceCell = htmlDocument.createElement('td');
-			var unitPrice = parseFloat(itemStatement.row.unit_price).toFixed(2)
-			itemUnitPriceCell.setAttribute('class', 'unitPrice');
-			itemUnitPriceCell.innerHTML = unitPrice;
-			itemRow.appendChild(itemUnitPriceCell);
-	
-			var itemTotalCostCell = htmlDocument.createElement('td');
-			itemTotalCostCell.setAttribute('class', 'totalCost');
-				
-			var totalCost = parseFloat(itemStatement.row.totalCost);
-			
-			itemTotalCostCell.innerHTML = totalCost.toFixed(2);
-			itemRow.appendChild(itemTotalCostCell);
-				
-			if ( unitPrice >= 2500 )
-			{
-				var htmlEquipmentBarCode = htmlDocument.getElementById('htmlEquipmentBarCode');
-				htmlEquipmentBarCode.checked = true;
-			}
-			
-			htmlItems.appendChild(itemRow);
-			index++;
-		}
-			
-		itemStatement.reset();
-			
-		/*
-		 * Add blank rows to the end of the form.
-		 */
-		var htmlItemsHeight = htmlItems.offsetHeight;
-		
-		/*
-		 * 450 is the maximum height in pixels for listing items on one page.
-		 */
-		var remainingSpace = 450 - htmlItemsHeight;
-		
-		/*
-		 * 31 is the row height for an empty or one row.
-		 */
-		var rowHeight = 31;
-		
-		while ( remainingSpace >= rowHeight )
-		{
-			var itemRow = htmlDocument.createElement('tr');
-			itemRow.appendChild(htmlDocument.createElement('td'));
-			itemRow.appendChild(htmlDocument.createElement('td'));
-			itemRow.appendChild(htmlDocument.createElement('td'));
-			itemRow.appendChild(htmlDocument.createElement('td'));
-			itemRow.appendChild(htmlDocument.createElement('td'));
-			itemRow.appendChild(htmlDocument.createElement('td'));
-				
-			var endCell = htmlDocument.createElement('td')
-			endCell.setAttribute('class', 'end');
-			itemRow.appendChild(endCell);
-			
-			htmlItems.appendChild(itemRow);
-			
-			remainingSpace = remainingSpace - rowHeight;
 		}
 	}
 }

@@ -40,7 +40,6 @@
  */
 var Company = new function()
 {
-	var HTTP = "http://";
 	var id = '';
 	var name = '';
 	var address = '';
@@ -53,8 +52,6 @@ var Company = new function()
 	this.edit = edit;
 	this.remove = remove;	
 	this.search = search;
-	this.gotoWebsite = gotoWebsite;
-	this.currentPage = currentPage;
 	this.showAddForm = showAddForm;
 	this.showUpdateForm = showUpdateForm;
 	this.resetForm = resetForm;
@@ -191,31 +188,6 @@ var Company = new function()
 	}
 	
 	/**
-	 * Opens a new tab in the browser at the company's website.
-	 */
-	function gotoWebsite(companyWebsite)
-	{	
-		if ( !companyWebsite )
-		{		
-			var companyTree = document.getElementById('NRLOrderIt-Company-Tree');
-			var currentIndex = companyTree.view.selection.currentIndex;	
-			
-			if ( currentIndex > -1 )
-			{
-				var companyWebsiteColumn = companyTree.columns.getNamedColumn('NRLOrderIt-Company-Tree-Website');
-				companyWebsite = companyTree.view.getCellText(currentIndex, companyWebsiteColumn)				
-			}
-		}
-		
-		if ( companyWebsite.substring(0, 7) != HTTP )
-		{
-			companyWebsite = HTTP + companyWebsite;
-		}
-		
-		gBrowser.selectedTab = gBrowser.addTab(companyWebsite);
-	}
-	
-	/**
 	 * Shows the form for adding a new company.
 	 */
 	function showAddForm()
@@ -268,22 +240,8 @@ var Company = new function()
 			
 			showForm();
 			
-			if ( NRLOrderIt.prefs.getBoolPref('general.doubleclicktowebsite') )
-			{
-				gotoWebsite(website);
-			}
-			
 			NRLOrderIt.updateMessage('company.edit');
 		}
-	}
-	
-	/**
-	 * Sets the company home page to the web page in the currently active tab.
-	 */
-	function currentPage()
-	{
-		var formWebsite = document.getElementById('NRLOrderIt-Company-Form-Website');
-		formWebsite.value = gBrowser.contentDocument.location;
 	}
 	
 	/**

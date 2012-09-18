@@ -1,20 +1,15 @@
 <!ENTITY nrlorderit.nrlorderit.label "NRL Order It">
 <!ENTITY nrlorderit.welcome.label "Welcome to NRL Order It!">
 <!ENTITY nrlorderit.preferences.label "Preferences">
-<!ENTITY nrlorderit.fullscreen.label "Fullscreen">
 <!ENTITY nrlorderit.close.label "Close">
 <!ENTITY nrlorderit.tab.purchaseorders.label "Purchase Orders">
 <!ENTITY nrlorderit.tab.companies.label "Companies">
 <!ENTITY nrlorderit.tab.jobordernumbers.label "Job Order Numbers">
 <!ENTITY nrlorderit.new.label "New">
 <!ENTITY nrlorderit.edit.label "Edit">
-<!ENTITY nrlorderit.view.label "View">
-<!ENTITY nrlorderit.goto.label "Go To...">
-<!ENTITY nrlorderit.print.label "Print">
+<!ENTITY nrlorderit.generate.label "Generate">
 <!ENTITY nrlorderit.copy.label "Copy">
 <!ENTITY nrlorderit.delete.label "Delete">
-<!ENTITY nrlorderit.submit.label "Submitted">
-<!ENTITY nrlorderit.receive.label "Received">
 <!ENTITY nrlorderit.title.label "Title">
 <!ENTITY nrlorderit.company.label "Company">
 <!ENTITY nrlorderit.jobordernumber.label "Job Order Number">
@@ -54,35 +49,27 @@
 <!ENTITY nrlorderit.phone.label "Phone">
 <!ENTITY nrlorderit.fax.label "Fax">
 <!ENTITY nrlorderit.website.label "Website">
-<!ENTITY nrlorderit.currentpage.label "+">
 <!ENTITY nrlorderit.accountnumber.label "Account #">
 <!ENTITY nrlorderit.general.label "General">
 <!ENTITY nrlorderit.defaults.label "Defaults">
-<!ENTITY nrlorderit.doubleclicktowebsite.label "Double click to website">
-<!ENTITY nrlorderit.showprintdialog.label "Show Print Dialog">
-<!ENTITY nrlorderit.signaturedate.label "Signature Date">
-<!ENTITY nrlorderit.signaturetitle.label "Signature Title">
-<!ENTITY nrlorderit.yes.label "Yes">
+<!ENTITY nrlorderit.printaftergenerate.label "Print after Generate">
+<!ENTITY nrlorderit.closeafterprint.label "Close after Print">
 
 <!ENTITY nrlorderit.statusbar.tooltip "NRL Order It">
-<!ENTITY nrlorderit.preferences.tooltip "Set user defined options">
-<!ENTITY nrlorderit.fullscreen.tooltip "Toggle Fullscreen mode">
+<!ENTITY nrlorderit.preferences.tooltip "Set user defined defaults and options">
 <!ENTITY nrlorderit.close.tooltip "Hides the extension">
 
-<!ENTITY nrlorderit.preference.doubleclicktowebsite.tooltip "If yes, double clicking a company will open a new tab with the company website">
-<!ENTITY nrlorderit.preference.showprintdialog.tooltip "Show the Print Dialog when printing a purchase order. If no, the default printer will be used.">
-<!ENTITY nrlorderit.preference.signaturedate.tooltip "Include today's date on the bottom of the form when generating purchase order as part of the signature line">
+<!ENTITY nrlorderit.preference.printaftergenerate.tooltip "Display the print dialog after generating a properly formatted purchase order">
+<!ENTITY nrlorderit.preference.closeafterprint.tooltip "Close the properly formatted purchase order after printing. Only works if 'Print on Generate' is checked.">
+<!ENTITY nrlorderit.preference.title.tooltip "The default title when a new purchase order is created">
 <!ENTITY nrlorderit.preference.originator.tooltip "The default originator when a new purchase order is created">
 <!ENTITY nrlorderit.preference.deliverto.tooltip "The default deliver to destination when a new purchase order is created">
 <!ENTITY nrlorderit.preference.priority.tooltip "The default priority when a new purchase order is created">
-<!ENTITY nrlorderit.preference.daterequired.tooltip "The default number of days from the current day the required date for a purchase order. Set to '0' for the current date.">
 <!ENTITY nrlorderit.preference.unitofissue.tooltip "The default unit of issue when a new item is created">
-<!ENTITY nrlorderit.preference.signaturetitle.tooltip "The default title placed at the bottom of the purchase order next to the signature">
 
 <!ENTITY nrlorderit.purchaseorder.new.tooltip "Creates a new blank purchase order">
 <!ENTITY nrlorderit.purchaseorder.edit.tooltip "Edits an existing purchase order">
-<!ENTITY nrlorderit.purchaseorder.view.tooltip "Displays a formatted purchase order in a new browser tab">
-<!ENTITY nrlorderit.purchaseorder.print.tooltip "Prints the purchase order">
+<!ENTITY nrlorderit.purchaseorder.generate.tooltip "Generates a formatted purchase order in a new browser tab ready for printing and submission">
 <!ENTITY nrlorderit.purchaseorder.copy.tooltip "Creates a duplicate of an existing purchase order">
 <!ENTITY nrlorderit.purchaseorder.delete.tooltip "Removes an existing purchase order">
 <!ENTITY nrlorderit.purchaseorder.search.tooltip "Keyword searches all purchase orders and items">
@@ -123,7 +110,6 @@
 <!ENTITY nrlorderit.company.phone.tooltip "Phone number in any format">
 <!ENTITY nrlorderit.company.fax.tooltip "Fax number in any format">
 <!ENTITY nrlorderit.company.website.tooltip "The company home page">
-<!ENTITY nrlorderit.company.currentpage.tooltip "Use the current webpage as the company home page">
 <!ENTITY nrlorderit.company.add.tooltip "Saves the new company">
 <!ENTITY nrlorderit.company.update.tooltip "Saves the change to the existing company">
 <!ENTITY nrlorderit.company.reset.tooltip "Clears the form">
