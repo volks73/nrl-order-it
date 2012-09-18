@@ -1,4 +1,4 @@
-pref("nrlorderit.version", "0.0.0");
+pref("nrlorderit.version", "");
 pref("nrlorderit.firstrun", true);
 pref("nrlorderit.general.showprintdialog", true);
 pref("nrlorderit.general.signaturedate", true);
