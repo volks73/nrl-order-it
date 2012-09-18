@@ -21,16 +21,3 @@ Division Code 6100 that allows employees to manage, create, and track purchase o
 
 * The extension is installed on a per user, per profile basis. Thus, if others use the same computer, each
   user will have to obtain the '.xpi' file and follow the above installation instructions.
-  
-  +----------+
-  | Versions |
-  +----------+
-  
-  Version 0.3.5 adds compatibility for Firefox 7.0.*. There are no bug fixes or additional features included
-  in this update.
-  
-  Version 0.3.6 adds compatibility for Firefox 8.0.*. There are no bug fixes or additional features included
-  in this update.
-  
-  Version 0.3.7 adds compatibility for Firefox 9.0.*. There are no bug fixes or additional features included
-  in this update.
