@@ -2,6 +2,8 @@
 * NRL Order It README *
 ***********************
 
+Created by Christopher R. Field <christopher.field@nrl.navy.mil, cfield2@gmail.com>
+
 NRL Order It is a FireFox extension for the U.S. Naval Research Laboratory Chemistry 
 Division Code 6100 that allows employees to manage, create, and track purchase orders.
 
