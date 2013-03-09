@@ -1,4 +1,5 @@
 #summary A brief tutorial for getting started
+#labels Phase-Deploy
 
 = Getting Started =
 
@@ -42,8 +43,6 @@ The NRL Order It extension can be accessed via three mechanisms once Firefox has
  # Click on 'New', a form will appear to be filled. Clicking 'Reset' clears the form to start over, while clicking on 'Cancel' clears and hides the form.
  # Fill out the form. The 'Title' is a unique name or description for the purchase order but will not be used in the generation of the purchase order. All job order numbers created previously will be listed in the 'Job Order Number' drop down list. All companies created previously will be listed in the 'Company' drop down list. The 'Notes' field is optional and for additional information but is not used in submission to Procurement. A HazMat code must be selected for all items. Fields can also be filled out by copy and paste.
  # Click on 'Done' after completing the form. The purchase order is now saved and ready for printing and submission.
-
-
 
 
 
